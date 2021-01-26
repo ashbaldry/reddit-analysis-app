@@ -40,7 +40,7 @@ $.extend(semanticSearchBinding, {
 
   // This returns a jQuery object with the DOM element.
   find: function(scope) {
-    return $(scope).find('.search');
+    return $(scope).find('.subreddit-search');
   },
 
   // Returns the ID of the DOM element.

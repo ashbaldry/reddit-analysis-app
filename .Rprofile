@@ -1,0 +1,1 @@
+options(shiny.port = 8100)
