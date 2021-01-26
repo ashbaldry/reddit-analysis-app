@@ -1,5 +1,6 @@
 shiny.semantic::semanticPage(
-  title = "Reddit Analysis",
+  title = "Reddit Analysis", 
+  margin = 0,
   
   #### Settings ####
   tags$head(
@@ -10,20 +11,20 @@ shiny.semantic::semanticPage(
   
   #### Header ####
   tags$header(
-    style = "padding: 10px",
-    shiny::div(
-      shiny::a(class = "ui tiny image", href = "https://www.reddit.com", tags$img(src = "reddit_logo.png")),
-      shiny::uiOutput("login_button", inline = TRUE)
+    div(
+      class = "app-header",
+      a(class = "ui tiny image", href = "https://www.reddit.com", tags$img(src = "reddit_logo.png"), target = "_blank"),
+      uiOutput("login_button", inline = TRUE)
     )
   ),
   
   #### Top of Page ####
   shiny.semantic::tabset(
-    id = "top_tabset", menu_class = "three item", tab_content_class = "",
+    id = "top_tabset", menu_class = "three item top-menu", tab_content_class = "",
     tabs = list(
-      list(menu = shiny::div("Subreddit"), id = "subreddit", content = sub_page),
-      list(menu = shiny::div("User"), id = "user", content = user_page),
-      list(menu = shiny::div("Tab 3"), id = "tab3", content = shiny::div("SS"))
+      list(menu = div("User"), id = "user", content = user_page_ui("user")),
+      list(menu = div("Subreddit"), id = "subreddit", content = sub_page),
+      list(menu = div("Tab 3"), id = "tab3", content = div("SS"))
     )
   )
   
