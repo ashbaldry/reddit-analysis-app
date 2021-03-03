@@ -5,3 +5,7 @@ body {
 .app-header {
   padding: 10px;
 }
+
+.ui.grid {
+  padding: 1rem;
+}

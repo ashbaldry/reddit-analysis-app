@@ -45,7 +45,7 @@ auth_reddit_uri <- function(client_id, redirect_uri, scope = c("identity", "read
 #' @param client_secret The secret of the Reddit client app.
 #' 
 #' @return 
-access_reddit_uri <- function(auth_code, redirect_uri, client_id, client_secret) {
+get_reddit_access_token <- function(auth_code, redirect_uri, client_id, client_secret) {
   result <- httr::POST(
     "https://ssl.reddit.com/api/v1/access_token", 
     config = c(httr::authenticate(client_id, client_secret)), 

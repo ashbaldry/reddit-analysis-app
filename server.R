@@ -1,40 +1,35 @@
 function(input, output, session) {
-  auth_code <- reactiveVal(NULL)
-  access_token <- reactiveVal(NULL)
+  # Reddit Reactive
+  rr <- reactive(reddit$get_reactive())
   
-  #### Login ####
+  #### Log In/Out ####
   # Log In/Log Out Button
   login_button <- reactive({
-    if (!is.null(access_token())) {
+    rr()
+    if (reddit$is_authorized()) {
       shiny::a(id = "logout_button", class = "ui right floated basic orange button action-button", "Sign Out")
     } else {
-      shiny::a(class = "ui right floated orange button", href = auth_reddit_uri(client_id, redirect_uri), "Sign In")
+      shiny::a(class = "ui right floated orange button", href = reddit$get_auth_uri(), "Sign In")
     }
   })
   output$login_button <- shiny::renderUI(login_button())
   
   # When logging out, need to remove access token
   shiny::observeEvent(input$logout_button, {
-    auth_code(NULL)
-    access_token(NULL)
+    reddit$logout()
     shiny::updateQueryString("?", mode = "push")
   })
   
   #### API Token ####
   shiny::observe({
-    query_string <- shiny::parseQueryString(session$clientData$url_search)
-    if ("code" %in% names(query_string)) {
-      if (!identical(auth_code(), query_string$code)) {
-        auth_code(query_string$code)
-        result <- access_reddit_uri(query_string$code, redirect_uri, client_id, client_secret)
-        access_token(paste("bearer", result$access_token))
-      }
-    }
+    query <- getQueryString()
+    if ("code" %in% names(query)) reddit$get_access_token(query$code)  
   })
   
   #### User Page ####
-  callModule(user_page_server, "user", access_token = access_token)
+  callModule(user_page_server, "user", rr = rr)
   
+  #### Subreddit Page ####
   selected_sub <- reactive(input$sub_search)
   output$selected_sub <- shiny::renderText(selected_sub())
 }

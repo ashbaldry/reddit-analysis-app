@@ -5,6 +5,9 @@ library(data.table)
 library(httr)
 library(glue)
 
+#### Sourcing Scripts ####
+lapply(list.files("R", full.names = TRUE), source, echo = FALSE)
+
 #### Reddit Authentication ####
 # RStudio Cloud or local
 if (!interactive()) {
@@ -17,5 +20,6 @@ if (!interactive()) {
   redirect_uri <- "http://127.0.0.1:8100"
 }
 
-#### Sourcing Scripts ####
-lapply(list.files("R", full.names = TRUE), source, echo = FALSE)
+reddit <- Reddit$new(client_id, client_secret, redirect_uri)
+
+
