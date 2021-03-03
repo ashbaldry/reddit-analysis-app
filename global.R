@@ -19,7 +19,3 @@ if (!interactive()) {
   client_secret <- Sys.getenv("local_client_secret")
   redirect_uri <- "http://127.0.0.1:8100"
 }
-
-reddit <- Reddit$new(client_id, client_secret, redirect_uri)
-
-

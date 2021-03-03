@@ -1,5 +1,6 @@
 function(input, output, session) {
   # Reddit Reactive
+  reddit <- Reddit$new(client_id, client_secret, redirect_uri)
   rr <- reactive(reddit$get_reactive())
   
   #### Log In/Out ####
@@ -27,7 +28,7 @@ function(input, output, session) {
   })
   
   #### User Page ####
-  callModule(user_page_server, "user", rr = rr)
+  callModule(user_page_server, "user", reddit = reddit, rr = rr)
   
   #### Subreddit Page ####
   selected_sub <- reactive(input$sub_search)

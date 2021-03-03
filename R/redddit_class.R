@@ -15,7 +15,7 @@ Reddit <- R6::R6Class(
       if (is.null(client_id) || is.null(redirect_uri)) {
         stop("Client ID and Redirect URI must be specified for Authorization URI")
       }
-      auth_reddit_uri(private$client_id, private$redirect_uri)
+      auth_reddit_uri(private$client_id, private$redirect_uri, c("identity", "read"))
     },
     
     get_access_token = function(auth_code) {
@@ -24,6 +24,8 @@ Reddit <- R6::R6Class(
       private$auth_code <- auth_code
       res <- get_reddit_access_token(auth_code, private$redirect_uri, private$client_id, private$client_secret)
       private$access_token <- paste("bearer", res$access_token)
+      
+      private$user_name <- self$get_user_info()$name
     },
     
     is_authorized = function() {
@@ -44,11 +46,17 @@ Reddit <- R6::R6Class(
       httr::content(res)
     },
     
+    get_user_comments = function(user_name = private$user_name) {
+      if (is.null(user_name)) stop("User name required")
+      parse_user_comments(user_name)
+    },
+    
     logout = function() {
       private$reactive_dep(isolate(private$reactive_dep()) + 1)
       
       private$auth_code <- NULL
       private$access_token <- NULL
+      private$user_name <- NULL
     },
     
     get_reactive = function() {
@@ -62,6 +70,7 @@ Reddit <- R6::R6Class(
     client_secret = NULL,
     redirect_uri = NULL,
     auth_code = NULL,
-    access_token = NULL
+    access_token = NULL,
+    user_name = NULL
   )
 )

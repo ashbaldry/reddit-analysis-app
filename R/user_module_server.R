@@ -1,4 +1,4 @@
-user_page_server <- function(input, output, session, rr) {
+user_page_server <- function(input, output, session, reddit, rr) {
   ns <- session$ns
   
   user_info <- reactive({
