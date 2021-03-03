@@ -5,7 +5,7 @@ shiny.semantic::semanticPage(
   #### Settings ####
   tags$head(
     tags$script(src = "sub_search.js"),
-    tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
+    tags$link(rel = "stylesheet", type = "text/css", href = "/style.css"),
     tags$link(rel = "icon", href = "https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-144x144.png")
   ),
   
@@ -20,7 +20,9 @@ shiny.semantic::semanticPage(
   
   #### Top of Page ####
   shiny.semantic::tabset(
-    id = "top_tabset", menu_class = "three item top-menu", tab_content_class = "",
+    id = "top_tabset", 
+    menu_class = "three item tabular top attached", 
+    tab_content_class = "bottom attached segment",
     tabs = list(
       list(menu = div("User"), id = "user", content = user_page_ui("user")),
       list(menu = div("Subreddit"), id = "subreddit", content = sub_page),
