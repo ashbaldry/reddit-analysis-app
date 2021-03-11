@@ -4,6 +4,9 @@
 Reddit <- R6::R6Class(
   "Reddit",
   public = list(
+    user_info = NULL,
+    user_name = NULL,
+    
     initialize = function(client_id, client_secret, redirect_uri) {
       private$reactive_dep <- reactiveVal(0)
       private$client_id <- client_id
@@ -29,7 +32,8 @@ Reddit <- R6::R6Class(
       res <- get_reddit_access_token(auth_code, private$redirect_uri, private$client_id, private$client_secret)
       private$access_token <- paste("bearer", res$access_token)
       
-      private$user_name <- self$get_user_info()$name
+      self$user_info <- self$get_user_info()
+      self$user_name <- self$user_info$name
     },
     
     is_authorized = function() {
@@ -50,12 +54,12 @@ Reddit <- R6::R6Class(
       httr::content(res)
     },
     
-    get_user_comments = function(user_name = private$user_name) {
+    get_user_comments = function(user_name = self$user_name) {
       if (is.null(user_name)) return(NULL)
       get_user_comments(user_name = user_name, access_token = private$access_token)
     },
     
-    get_user_posts = function(user_name = private$user_name) {
+    get_user_posts = function(user_name = self$user_name) {
       if (is.null(user_name)) return(NULL)
       get_user_posts(user_name = user_name, access_token = private$access_token)
     },
@@ -65,7 +69,8 @@ Reddit <- R6::R6Class(
       
       private$auth_code <- NULL
       private$access_token <- NULL
-      private$user_name <- NULL
+      self$user_info <- NULL
+      self$user_name <- NULL
     },
     
     get_reactive = function() {
@@ -79,7 +84,6 @@ Reddit <- R6::R6Class(
     client_secret = NULL,
     redirect_uri = NULL,
     auth_code = NULL,
-    access_token = NULL,
-    user_name = NULL
+    access_token = NULL
   )
 )

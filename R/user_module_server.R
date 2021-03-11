@@ -14,4 +14,6 @@ user_page_server <- function(input, output, session, reddit, rr) {
   output$avatar <- renderUI(avatar())
   
   output$karma <- renderText(user_info()$total_karma)
+  
+  
 }

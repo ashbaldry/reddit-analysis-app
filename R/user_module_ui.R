@@ -2,7 +2,7 @@ user_page_ui <- function(id) {
   ns <- NS(id)
   
   div(
-    class = "ui stackable grid",
+    class = "ui stackable grid padded-grid",
     div(
       class = "row",
       h1("User Analysis")
