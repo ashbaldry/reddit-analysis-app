@@ -15,7 +15,11 @@ Reddit <- R6::R6Class(
       if (is.null(client_id) || is.null(redirect_uri)) {
         stop("Client ID and Redirect URI must be specified for Authorization URI")
       }
-      auth_reddit_uri(private$client_id, private$redirect_uri, c("identity", "read"))
+      auth_reddit_uri(
+        private$client_id, 
+        private$redirect_uri, 
+        c("identity", "read", "history")
+      )
     },
     
     get_access_token = function(auth_code) {
@@ -47,8 +51,13 @@ Reddit <- R6::R6Class(
     },
     
     get_user_comments = function(user_name = private$user_name) {
-      if (is.null(user_name)) stop("User name required")
-      parse_user_comments(user_name)
+      if (is.null(user_name)) return(NULL)
+      get_user_comments(user_name = user_name, access_token = private$access_token)
+    },
+    
+    get_user_posts = function(user_name = private$user_name) {
+      if (is.null(user_name)) return(NULL)
+      get_user_posts(user_name = user_name, access_token = private$access_token)
     },
     
     logout = function() {
