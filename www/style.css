@@ -6,6 +6,23 @@ body {
   padding: 10px;
 }
 
-.ui.grid {
+.user-header-item.ui.items>.item .meta {
+  margin: 0;
+}
+
+.right-float {
+  float: right;
+}
+
+.banner-avatar-image {
+  
+}
+
+.banner-karma-icon {
+  height: 12px;
+  fill: #ff4500;
+}
+
+.ui.grid.padded-grid {
   padding: 1rem;
 }

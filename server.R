@@ -1,28 +1,63 @@
 function(input, output, session) {
   # Reddit Reactive
-  reddit <- Reddit$new(client_id, client_secret, redirect_uri)
+  reddit <<- Reddit$new(client_id, client_secret, redirect_uri)
   rr <- reactive(reddit$get_reactive())
   
   #### Log In/Out ####
   # Log In/Log Out Button
   login_button <- reactive({
     rr()
-    if (reddit$is_authorized()) {
-      shiny::a(id = "logout_button", class = "ui right floated basic orange button action-button", "Sign Out")
+    if (!reddit$is_authorized()) {
+      a(class = "ui right floated orange button", href = reddit$get_auth_uri(), "Sign In")
     } else {
-      shiny::a(class = "ui right floated orange button", href = reddit$get_auth_uri(), "Sign In")
+      shiny.semantic::dropdown_menu(
+        name = "user_menu",
+        class = "right-float",
+        div(
+          class = "ui grid",
+          div(
+            class = "thirteen wide column",
+            div(
+              class = "ui tiny items user-header-item",
+              div(
+                class = "item",
+                div(
+                  class = "ui mini image",
+                  # tags$img(class = "banner-avatar-image", src = reddit$user_info$icon_img)
+                  tags$img(src = reddit$user_info$icon_img)
+                ),
+                div(
+                  class = "content",
+                  div(class = "header", reddit$user_name),
+                  div(class = "meta", reddit_karma_icon("banner-karma-icon"), paste(reddit$user_info$total_karma, "karma"))
+                )
+              )
+            )
+          ),
+          div(
+            class = "two wide column",
+            shiny.semantic::icon(class = "dropdown")
+          )
+        ),
+        shiny.semantic::menu(
+          class = "fluid",
+          shiny.semantic::menu_item(
+            id = "logout_button", class = "action-button", shiny.semantic::icon("sign out alternate"), "Log Out"
+          )
+        )
+      )
     }
   })
-  output$login_button <- shiny::renderUI(login_button())
+  output$login_button <- renderUI(login_button())
   
   # When logging out, need to remove access token
-  shiny::observeEvent(input$logout_button, {
+  observeEvent(input$logout_button, {
     reddit$logout()
-    shiny::updateQueryString("?", mode = "push")
+    updateQueryString("?", mode = "push")
   })
   
   #### API Token ####
-  shiny::observe({
+  observe({
     query <- getQueryString()
     if ("code" %in% names(query)) reddit$get_access_token(query$code)  
   })
@@ -32,5 +67,5 @@ function(input, output, session) {
   
   #### Subreddit Page ####
   selected_sub <- reactive(input$sub_search)
-  output$selected_sub <- shiny::renderText(selected_sub())
+  output$selected_sub <- renderText(selected_sub())
 }
