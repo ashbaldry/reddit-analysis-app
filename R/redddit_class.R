@@ -2,10 +2,15 @@
 #' 
 #' @export
 Reddit <- R6::R6Class(
-  "Reddit",
+  "Reddit", 
+  
   public = list(
     user_info = NULL,
     user_name = NULL,
+    user_posts = NULL,
+    user_comments = NULL,
+    user_upvotes = NULL,
+    user_downvotes = NULL,
     
     initialize = function(client_id, client_secret, redirect_uri) {
       private$reactive_dep <- reactiveVal(0)
@@ -56,12 +61,38 @@ Reddit <- R6::R6Class(
     
     get_user_comments = function(user_name = self$user_name) {
       if (is.null(user_name)) return(NULL)
-      get_user_comments(user_name = user_name, access_token = private$access_token)
+      comments <- get_user_activity(
+        user_name = user_name, access_token = private$access_token, api_call = "comments"
+      )
+      self$user_comments <- comments
+      comments
     },
     
     get_user_posts = function(user_name = self$user_name) {
       if (is.null(user_name)) return(NULL)
-      get_user_posts(user_name = user_name, access_token = private$access_token)
+      posts <- get_user_activity(
+        user_name = user_name, access_token = private$access_token, api_call = "submitted"
+      )
+      self$user_posts <- posts
+      posts
+    },
+    
+    get_user_upvotes = function(user_name = self$user_name) {
+      if (is.null(user_name)) return(NULL)
+      comments <- get_user_activity(
+        user_name = user_name, access_token = private$access_token, api_call = "upvoted"
+      )
+      self$user_upvotes <- comments
+      comments
+    },
+    
+    get_user_downvotes = function(user_name = self$user_name) {
+      if (is.null(user_name)) return(NULL)
+      comments <- get_user_activity(
+        user_name = user_name, access_token = private$access_token, api_call = "downvoted"
+      )
+      self$user_downvotes <- comments
+      comments
     },
     
     logout = function() {
@@ -71,6 +102,10 @@ Reddit <- R6::R6Class(
       private$access_token <- NULL
       self$user_info <- NULL
       self$user_name <- NULL
+      self$user_posts <- NULL
+      self$user_comments <- NULL
+      self$user_upvotes <- NULL
+      self$user_downvotes <- NULL
     },
     
     get_reactive = function() {
@@ -78,6 +113,7 @@ Reddit <- R6::R6Class(
       self
     }
   ),
+  
   private = list(
     reactive_dep = NULL,
     client_id = NULL,
