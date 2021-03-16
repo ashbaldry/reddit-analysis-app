@@ -1,6 +1,7 @@
 #### Packages ####
 library(shiny)
 library(shiny.semantic)
+library(highcharter)
 library(data.table)
 library(httr)
 library(glue)
