@@ -1,4 +1,4 @@
-get_user_activity <- function(user_name, access_token, api_call = "comments") {
+get_user_activity <- function(user_name, access_token, api_call = "comments", max_posts = 25) {
   res <- httr::GET(
     glue::glue("https://oauth.reddit.com/user/{user_name}/{api_call}"),
     httr::add_headers(Authorization = access_token),
@@ -30,7 +30,7 @@ get_user_activity <- function(user_name, access_token, api_call = "comments") {
   out_lst <- lapply(cont$data$children, clean_post_data)
   count <- length(out_lst)
   
-  while (!is.null(cont$data$after) && count < 1000) {
+  while (!is.null(cont$data$after) && count < max_posts) {
     res <- httr::GET(
       glue::glue("https://oauth.reddit.com/user/{user_name}/{api_call}"),
       httr::add_headers(Authorization = access_token),
