@@ -3,6 +3,7 @@ library(shiny)
 library(shiny.semantic)
 library(highcharter)
 library(data.table)
+library(magrittr)
 library(httr)
 library(glue)
 

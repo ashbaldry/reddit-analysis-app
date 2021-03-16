@@ -15,11 +15,11 @@ user_page_ui <- function(id) {
         class = "column",
         div(
           class = "ui orange segment",
-          highcharter::highchartOutput(ns("upvote_plt"), height = "300px")
+          highcharter::highchartOutput(ns("upvote_plt"), height = "350px")
         ),
         div(
           class = "ui blue segment",
-          highcharter::highchartOutput(ns("downvote_plt"), height = "300px")
+          highcharter::highchartOutput(ns("downvote_plt"), height = "350px")
         )
       )
     )

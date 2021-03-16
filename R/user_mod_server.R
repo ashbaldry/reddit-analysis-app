@@ -9,7 +9,7 @@ user_page_server <- function(input, output, session, reddit, rr) {
   })
   
   output$upvote_plt <- highcharter::renderHighchart({
-    votes_chart(user_upvotes(), color = "FF8B60", label = "Upvotes")
+    votes_chart(user_upvotes(), color = "#FF8B60", label = "Upvotes")
   })
   
   #### Downvotes ####
@@ -20,6 +20,6 @@ user_page_server <- function(input, output, session, reddit, rr) {
   })
 
   output$downvote_plt <- highcharter::renderHighchart({
-    votes_chart(user_downvotes(), color = "9494FF", label = "Downvotes")
+    votes_chart(user_downvotes(), color = "#9494FF", label = "Downvotes")
   })
 }
