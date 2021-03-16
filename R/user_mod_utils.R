@@ -6,10 +6,13 @@ votes_chart <- function(dt, color = "#333333", label = "Upvotes") {
   highcharter::highchart() %>%
     highcharter::hc_add_series(
       plt_dt[1:10], highcharter::hcaes(x = subreddit, y = count),
-      type = "bar", name = "Downvotes", color = color
+      type = "bar", name = label, color = color
     ) %>%
     highcharter::hc_xAxis(
       type = "category"
+    ) %>%
+    highcharter::hc_title(
+      text = glue::glue("Top {sub('s$', 'd', label)} Subreddits")
     ) %>%
     highcharter::hc_legend(
       enabled = FALSE
