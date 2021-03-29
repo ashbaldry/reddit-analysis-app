@@ -6,49 +6,56 @@ function(input, output, session) {
   #### Log In/Out ####
   # Log In/Log Out Button
   login_button <- reactive({
-    rr()
-    if (!reddit$is_authorized()) {
       a(class = "ui right floated orange button", href = reddit$get_auth_uri(), "Sign In")
-    } else {
-      shiny.semantic::dropdown_menu(
-        name = "user_menu",
-        class = "right-float",
+  })
+  
+  signed_in_settings <- reactive({
+    shiny.semantic::dropdown_menu(
+      name = "user_menu",
+      class = "right-float",
+      div(
+        class = "ui grid",
         div(
-          class = "ui grid",
+          class = "thirteen wide column",
           div(
-            class = "thirteen wide column",
+            class = "ui tiny items user-header-item",
             div(
-              class = "ui tiny items user-header-item",
+              class = "item",
               div(
-                class = "item",
-                div(
-                  class = "ui mini image",
-                  # tags$img(class = "banner-avatar-image", src = reddit$user_info$icon_img)
-                  tags$img(src = reddit$user_info$icon_img)
-                ),
-                div(
-                  class = "content",
-                  div(class = "header", reddit$user_name),
-                  div(class = "meta", reddit_karma_icon("banner-karma-icon"), paste(reddit$user_info$total_karma, "karma"))
-                )
+                class = "ui mini image",
+                # tags$img(class = "banner-avatar-image", src = reddit$user_info$icon_img)
+                tags$img(src = reddit$user_info$icon_img)
+              ),
+              div(
+                class = "middle aligned content",
+                div(class = "header", reddit$user_name),
+                div(class = "meta", reddit_karma_icon("banner-karma-icon"), paste(reddit$user_info$total_karma, "karma"))
               )
             )
-          ),
-          div(
-            class = "two wide column",
-            shiny.semantic::icon(class = "dropdown")
           )
         ),
-        shiny.semantic::menu(
-          class = "fluid",
-          shiny.semantic::menu_item(
-            id = "logout_button", class = "action-button", shiny.semantic::icon("sign out alternate"), "Log Out"
-          )
+        div(
+          class = "two wide column",
+          shiny.semantic::icon(class = "dropdown")
+        )
+      ),
+      shiny.semantic::menu(
+        class = "fluid",
+        shiny.semantic::menu_item(
+          id = "logout_button", class = "action-button", shiny.semantic::icon("sign out alternate"), "Log Out"
         )
       )
+    )
+  })
+  
+  output$login_button <- renderUI({
+    rr()
+    if (!reddit$is_authorized()) {
+      login_button()
+    } else {
+      signed_in_settings()
     }
   })
-  output$login_button <- renderUI(login_button())
   
   # When logging out, need to remove access token
   observeEvent(input$logout_button, {
