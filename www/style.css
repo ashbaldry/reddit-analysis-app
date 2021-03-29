@@ -1,9 +1,9 @@
 body {
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: 'IBM Plex Sans', IBMPlexSans, Arial, BentonSans, sans-serif;
 }
 
-.app-header {
-  padding: 10px;
+body, .ui.tab.segment {
+  background-color: #EFF7FF;
 }
 
 .user-header-item.ui.items>.item .meta {
@@ -19,7 +19,7 @@ body {
 }
 
 .banner-karma-icon {
-  height: 12px;
+  height: 10px;
   fill: #ff4500;
 }
 

@@ -1,3 +1,4 @@
+// Subreddit Search
 var semanticSearchBinding = new Shiny.InputBinding();
 
 $.extend(semanticSearchBinding, {

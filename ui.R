@@ -4,30 +4,60 @@ shiny.semantic::semanticPage(
   
   #### Settings ####
   tags$head(
+    tags$link(rel = "preconnect", href = "https://fonts.gstatic.com"),
+    tags$link(
+      rel = "stylesheet",
+      href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100&display=swap"
+    ),
     tags$script(src = "sub_search.js"),
+    tags$script(src = "on_load.js"),
     tags$link(rel = "stylesheet", type = "text/css", href = "/style.css"),
     tags$link(rel = "icon", href = "https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-144x144.png")
   ),
   
   #### Header ####
   tags$header(
-    div(
-      class = "app-header",
-      a(class = "ui tiny image", href = "https://www.reddit.com", tags$img(src = "reddit_logo.png"), target = "_blank"),
-      uiOutput("login_button", inline = TRUE)
+    menu(
+      class = "top attached borderless",
+      menu_item(
+        href = "https://www.reddit.com", target = "_blank",
+        div(class = "ui tiny image", tags$img(src = "reddit_logo.png"))
+      ),
+      
+      div(
+        class = "item",
+        div(
+          class = "ui selection dropdown", id = "page_select",
+          div(class = "text", tags$i(class = "home icon"), "Home"), 
+          tags$i(class = "dropdown icon"),
+          div(
+            class = "menu",
+            a(class = "active item", `data-tab` = "home", `data-value` = "home", tags$i(class = "home icon"), "Home"),
+            a(class = "item", `data-tab` = "user", `data-value` = "user", tags$i(class = "reddit alien icon"), "User"),
+            a(class = "item", `data-tab` = "subreddit", `data-value` = "subreddit", tags$i(class = "list icon"), "Subreddit")
+          )
+        )
+      ),
+      
+      menu_item(
+        item_feature = "ui right",
+        uiOutput("login_button", inline = TRUE)
+      )
     )
   ),
   
-  #### Top of Page ####
-  shiny.semantic::tabset(
-    id = "top_tabset", 
-    menu_class = "three item tabular top attached", 
-    tab_content_class = "bottom attached segment",
-    tabs = list(
-      list(menu = div("User"), id = "user", content = user_page_ui("user")),
-      list(menu = div("Subreddit"), id = "subreddit", content = sub_page),
-      list(menu = div("Tab 3"), id = "tab3", content = div("SS"))
+  tags$main(
+    div(
+      class = "ui tab basic segment active", `data-tab` = "home",
+      h2("Welcome!")
+    ),
+    div(
+      class = "ui tab basic segment", `data-tab` = "user",
+      user_page_ui("user")
+    ),
+    div(
+      class = "ui tab basic segment", `data-tab` = "subreddit",
+      sub_page
     )
   )
-  
 )
