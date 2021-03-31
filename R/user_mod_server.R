@@ -86,25 +86,33 @@ user_page_server <- function(input, output, session, reddit, rr) {
   })
   output$comm_contro <- renderText(scales::percent(comm_controversiality()))
   
-  #### Upvotes ####
+  #### Comments ####
+  comm_words <- reactive({
+    if (is.null(user_comments()) || !nrow(user_comments())) return(NULL)
+  })
+  
+  #### Upvotes/Downvotes ####
   user_upvotes <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
     reddit$get_user_upvotes()
   })
   
-  output$upvote_plt <- highcharter::renderHighchart({
-    votes_chart(user_upvotes(), color = "#FF8B60", label = "Upvotes")
-  })
-  
-  #### Downvotes ####
   user_downvotes <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
     reddit$get_user_downvotes()
   })
 
-  output$downvote_plt <- highcharter::renderHighchart({
-    votes_chart(user_downvotes(), color = "#9494FF", label = "Downvotes")
+  output$vote_plt <- highcharter::renderHighchart({
+    if (input$vote_updown == "Upvotes") {
+      votes_chart(user_upvotes(), color = "#FF8B60", label = "Upvotes")
+    } else {
+      votes_chart(user_downvotes(), color = "#9494FF", label = "Downvotes")
+    }
+  })
+  
+  output$vote_ratio_plt <- highcharter::renderHighchart({
+    vote_ratio_chart(user_upvotes(), user_downvotes())
   })
 }
