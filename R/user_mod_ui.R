@@ -51,12 +51,15 @@ user_page_ui <- function(id) {
       div(
         class = "column",
         div(
-          class = "ui orange segment",
-          highcharter::highchartOutput(ns("upvote_plt"), height = "350px")
+          class = "ui segment",
+          form(
+            multiple_radio(ns("vote_updown"), NULL, c("Upvotes", "Downvotes"), selected = "Upvotes", position = "inline")
+          ),
+          highcharter::highchartOutput(ns("vote_plt"), height = "350px")
         ),
         div(
-          class = "ui blue segment",
-          highcharter::highchartOutput(ns("downvote_plt"), height = "350px")
+          class = "ui segment",
+          highcharter::highchartOutput(ns("vote_ratio_plt"), height = "350px")
         )
       )
     )

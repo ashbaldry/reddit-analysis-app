@@ -33,12 +33,16 @@ Reddit <- R6::R6Class(
     get_access_token = function(auth_code) {
       private$reactive_dep(isolate(private$reactive_dep()) + 1)
       
+      if (!is.null(private$access_token)) return(TRUE)
+      
       private$auth_code <- auth_code
       res <- get_reddit_access_token(auth_code, private$redirect_uri, private$client_id, private$client_secret)
       private$access_token <- paste("bearer", res$access_token)
       
       self$user_info <- self$get_user_info()
       self$user_name <- self$user_info$name
+      
+      return(TRUE)
     },
     
     is_authorized = function() {
@@ -61,37 +65,45 @@ Reddit <- R6::R6Class(
     
     get_user_comments = function(user_name = self$user_name) {
       if (is.null(user_name)) return(NULL)
+      if (user_name == self$user_name && !is.null(self$user_comments)) return(self$user_comments)
+      
       comments <- get_user_activity(
         user_name = user_name, access_token = private$access_token, api_call = "comments"
       )
-      self$user_comments <- comments
+      if (user_name == self$user_name) self$user_comments <- comments
       comments
     },
     
     get_user_posts = function(user_name = self$user_name) {
       if (is.null(user_name)) return(NULL)
+      if (user_name == self$user_name && !is.null(self$user_posts)) return(self$user_posts)
+      
       posts <- get_user_activity(
         user_name = user_name, access_token = private$access_token, api_call = "submitted"
       )
-      self$user_posts <- posts
+      if (user_name == self$user_name) self$user_posts <- posts
       posts
     },
     
     get_user_upvotes = function(user_name = self$user_name) {
       if (is.null(user_name)) return(NULL)
+      if (user_name == self$user_name && !is.null(self$user_upvotes)) return(self$user_upvotes)
+      
       comments <- get_user_activity(
         user_name = user_name, access_token = private$access_token, api_call = "upvoted"
       )
-      self$user_upvotes <- comments
+      if (user_name == self$user_name) self$user_upvotes <- comments
       comments
     },
     
     get_user_downvotes = function(user_name = self$user_name) {
       if (is.null(user_name)) return(NULL)
+      if (user_name == self$user_name && !is.null(self$user_downvotes)) return(self$user_downvotes)
+      
       comments <- get_user_activity(
         user_name = user_name, access_token = private$access_token, api_call = "downvoted"
       )
-      self$user_downvotes <- comments
+      if (user_name == self$user_name) self$user_downvotes <- comments
       comments
     },
     
