@@ -49,7 +49,13 @@ shiny.semantic::semanticPage(
   tags$main(
     div(
       class = "ui tab basic segment active", `data-tab` = "home",
-      h2("Welcome!")
+      h2("Welcome!"),
+      p("This app is used to take a look into historical Reddit posts and behaviour..."),
+      p("To get your results, please sign in"),
+      a(class = "ui inverted orange button", 
+        href = auth_reddit_uri(client_id, redirect_uri, c("identity", "read", "history")), 
+        "Sign In"
+      )
     ),
     div(
       class = "ui tab basic segment", `data-tab` = "user",
