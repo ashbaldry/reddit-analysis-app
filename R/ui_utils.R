@@ -25,3 +25,41 @@ reddit_segment <- function(sidebar, main_content) {
     )
   )
 }
+
+signed_in_dropdown <- function(reddit) {
+  shiny.semantic::dropdown_menu(
+    name = "user_menu",
+    class = "right-float",
+    div(
+      class = "ui grid",
+      div(
+        class = "thirteen wide column",
+        div(
+          class = "ui tiny unstackable items user-header-item",
+          div(
+            class = "item",
+            div(
+              class = "ui mini image",
+              tags$img(src = reddit$user_info$icon_img)
+            ),
+            div(
+              class = "middle aligned content",
+              div(class = "header", reddit$user_name),
+              div(class = "meta", reddit_karma_icon("banner-karma-icon"), paste(reddit$user_info$total_karma, "karma"))
+            )
+          )
+        )
+      ),
+      div(
+        class = "two wide column",
+        shiny.semantic::icon(class = "dropdown")
+      )
+    ),
+    shiny.semantic::menu(
+      class = "fluid",
+      shiny.semantic::menu_item(
+        id = "logout_button", class = "action-button", shiny.semantic::icon("sign out alternate"), "Log Out"
+      )
+    )
+  )
+}
