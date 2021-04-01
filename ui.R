@@ -11,7 +11,7 @@ shiny.semantic::semanticPage(
     ),
     tags$script(src = "sub_search.js"),
     tags$script(src = "on_load.js"),
-    tags$link(rel = "stylesheet", type = "text/css", href = "/style.css"),
+    tags$link(rel = "stylesheet", type = "text/css", href = "reddit-style.css"),
     tags$link(rel = "icon", href = "https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-144x144.png")
   ),
   
