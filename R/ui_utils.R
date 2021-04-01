@@ -8,3 +8,20 @@ reddit_karma_icon <- function(class) {
     )
   )
 }
+
+reddit_segment <- function(sidebar, main_content) {
+  div(
+    class = "ui segment",
+    div(
+      class = "ui grid",
+      div(
+        class = "one wide column grey-sidebar",
+        sidebar
+      ),
+      div(
+        class = "fifteen wide column",
+        main_content
+      )
+    )
+  )
+}

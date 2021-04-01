@@ -10,8 +10,8 @@ user_page_ui <- function(id) {
       ),
       div(
         class = "column",
-        div(
-          class = "ui orange segment",
+        reddit_segment(
+          NULL,
           div(
             class = "ui two statistics",
             div(
@@ -45,20 +45,26 @@ user_page_ui <- function(id) {
               div(class = "label", "Comment Controversiality")
             )
           )
+        ),
+        reddit_segment(
+          NULL,
+          highcharter::highchartOutput(ns("comm_word_cloud"), height = "350px")
         )
       ),
       
       div(
         class = "column",
-        div(
-          class = "ui segment",
-          form(
-            multiple_radio(ns("vote_updown"), NULL, c("Upvotes", "Downvotes"), selected = "Upvotes", position = "inline")
-          ),
-          highcharter::highchartOutput(ns("vote_plt"), height = "350px")
+        reddit_segment(
+          NULL,
+          tagList(
+            form(
+              multiple_radio(ns("vote_updown"), NULL, c("Upvotes", "Downvotes"), selected = "Upvotes", position = "inline")
+            ),
+            highcharter::highchartOutput(ns("vote_plt"), height = "350px")
+          )
         ),
-        div(
-          class = "ui segment",
+        reddit_segment(
+          NULL,
           highcharter::highchartOutput(ns("vote_ratio_plt"), height = "350px")
         )
       )

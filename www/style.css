@@ -26,3 +26,7 @@ body, .ui.tab.segment {
 .ui.grid.padded-grid {
   padding: 1rem;
 }
+
+.grey-sidebar {
+  background-color: #FBFBFB;
+}

@@ -89,6 +89,11 @@ user_page_server <- function(input, output, session, reddit, rr) {
   #### Comments ####
   comm_words <- reactive({
     if (is.null(user_comments()) || !nrow(user_comments())) return(NULL)
+    get_comment_words(user_comments())
+  })
+  
+  output$comm_word_cloud <- highcharter::renderHighchart({
+    word_freq_cloud(comm_words())
   })
   
   #### Upvotes/Downvotes ####
