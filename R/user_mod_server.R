@@ -12,7 +12,7 @@ user_page_server <- function(input, output, session, reddit, rr) {
   user_posts <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    reddit$get_user_posts()
+    reddit$get_user_posts(max_posts = 100)
   })
   
   #### Post Stats ####
@@ -48,7 +48,7 @@ user_page_server <- function(input, output, session, reddit, rr) {
   user_comments <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    reddit$get_user_comments()
+    reddit$get_user_comments(max_posts = 100)
   })
   
   #### Comment Stats ####

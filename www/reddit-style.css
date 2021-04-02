@@ -16,7 +16,7 @@ body, .ui.tab.segment {
     display: none;
   }
   
-  .grey-sidebar {
+  .ui.grid>.column.grey-sidebar {
     display: none;
   }
 }
