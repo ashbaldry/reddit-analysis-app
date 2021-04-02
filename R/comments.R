@@ -1,4 +1,4 @@
-get_user_activity <- function(user_name, access_token, api_call = "comments", max_posts = 25) {
+get_user_activity <- function(user_name, access_token, api_call = "comments", max_posts = 1000) {
   res <- httr::GET(
     glue::glue("https://oauth.reddit.com/user/{user_name}/{api_call}"),
     httr::add_headers(Authorization = access_token),

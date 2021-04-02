@@ -6,6 +6,27 @@ body, .ui.tab.segment {
   background-color: #EFF7FF;
 }
 
+@media only screen and (max-width: 767.98px) {
+  #user_menu .ui.items.unstackable>.item>.mini.image, 
+  #user_menu .ui.items.unstackable>.item>.mini.image>img {
+    width: 35px!important;
+  }
+  
+  #page_select {
+    display: none;
+  }
+  
+  .grey-sidebar {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .ui.dropdown#user_menu>.menu>.mobile-item {
+    display: none;
+  }
+}
+
 .user-header-item.ui.items>.item .meta {
   margin: 0;
 }

@@ -9,7 +9,7 @@ reddit_karma_icon <- function(class) {
   )
 }
 
-reddit_segment <- function(sidebar, main_content) {
+reddit_segment <- function(main_content, sidebar = NULL) {
   div(
     class = "ui segment",
     div(
@@ -27,39 +27,95 @@ reddit_segment <- function(sidebar, main_content) {
 }
 
 signed_in_dropdown <- function(reddit) {
-  shiny.semantic::dropdown_menu(
-    name = "user_menu",
-    class = "right-float",
+  tagList(
     div(
-      class = "ui grid",
+      id = "user_menu",
+      name = "user_menu",
+      class = "ui dropdown right-float",
       div(
-        class = "thirteen wide column",
+        class = "ui grid",
         div(
-          class = "ui tiny unstackable items user-header-item",
+          class = "thirteen wide column",
           div(
-            class = "item",
+            class = "ui tiny unstackable items user-header-item",
             div(
-              class = "ui mini image",
-              tags$img(src = reddit$user_info$icon_img)
-            ),
-            div(
-              class = "middle aligned content",
-              div(class = "header", reddit$user_name),
-              div(class = "meta", reddit_karma_icon("banner-karma-icon"), paste(reddit$user_info$total_karma, "karma"))
+              class = "item",
+              div(
+                class = "ui mini image",
+                tags$img(src = reddit$user_info$icon_img)
+              ),
+              div(
+                class = "middle aligned content",
+                div(class = "header", reddit$user_name),
+                div(
+                  class = "meta", 
+                  reddit_karma_icon("banner-karma-icon"), 
+                  paste(reddit$user_info$total_karma, "karma")
+                )
+              )
             )
           )
+        ),
+        div(
+          class = "two wide column",
+          shiny.semantic::icon(class = "dropdown")
         )
       ),
-      div(
-        class = "two wide column",
-        shiny.semantic::icon(class = "dropdown")
+      shiny.semantic::menu(
+        class = "fluid",
+        a(
+          class = "mobile-item item", `data-tab` = "home", `data-value` = "home", 
+          tags$i(class = "home icon"), "Home"
+        ),
+        a(
+          class = "mobile-item active item", `data-tab` = "user", `data-value` = "user", 
+          tags$i(class = "reddit alien icon"), "User"
+        ),
+        a(
+          class = "mobile-item item", `data-tab` = "votes", `data-value` = "votes", 
+          tags$i(class = "arrow alternate circle up icon"), "Votes"
+        ),
+        a(
+          class = "mobile-item item", `data-tab` = "comments", `data-value` = "comments", 
+          tags$i(class = "comment dots icon"), "Comments"
+        ),
+        a(
+          class = "mobile-item item", `data-tab` = "subreddit", `data-value` = "subreddit", 
+          tags$i(class = "list icon"), "Subreddit"
+        ),
+        shiny.semantic::menu_divider(class = "mobile-item"),
+        shiny.semantic::menu_item(
+          shiny.semantic::icon("external alternate"), "Visit Reddit",
+          href = "https://www.reddit.com", target = "_blank"
+        ),
+        shiny.semantic::menu_divider(),
+        shiny.semantic::menu_item(
+          id = "logout_button", class = "action-button", 
+          shiny.semantic::icon("sign out alternate"), "Log Out"
+        )
       )
     ),
-    shiny.semantic::menu(
-      class = "fluid",
-      shiny.semantic::menu_item(
-        id = "logout_button", class = "action-button", shiny.semantic::icon("sign out alternate"), "Log Out"
-      )
-    )
+    tags$script(HTML("
+      $('#user_menu').dropdown({
+        onChange: function() {
+          var menu_val = $(this).dropdown('get value');
+          var page_val = $('#page_select').dropdown('get value');
+          if (menu_val && (page_val !== menu_val)) {
+            $('#page_select').dropdown('set selected', menu_val);
+          }
+        }
+      });
+      $('#page_select').dropdown({
+        onChange: function() {
+          var page_val = $(this).dropdown('get value');
+          var menu_val = $('#user_menu').dropdown('get value');
+          if ((page_val !== menu_val)) {
+            $('#user_menu').dropdown('set selected', page_val);
+          }
+        }
+      });
+      $('#user_menu .mobile-item').tab();
+      $('#user_menu').dropdown('set selected', 'user');
+    "))
   )
 }

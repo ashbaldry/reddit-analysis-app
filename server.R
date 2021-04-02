@@ -28,8 +28,10 @@ function(input, output, session) {
     if ("code" %in% names(query)) reddit$get_access_token(query$code)  
   })
   
-  #### User Page ####
+  #### Content Pages ####
   callModule(user_page_server, "user", reddit = reddit, rr = rr)
+  callModule(votes_page_server, "votes", reddit = reddit, rr = rr)
+  
   
   #### Subreddit Page ####
   selected_sub <- reactive(input$sub_search)

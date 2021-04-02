@@ -32,9 +32,26 @@ shiny.semantic::semanticPage(
           tags$i(class = "dropdown icon"),
           div(
             class = "menu",
-            a(class = "active item", `data-tab` = "home", `data-value` = "home", tags$i(class = "home icon"), "Home"),
-            a(class = "item", `data-tab` = "user", `data-value` = "user", tags$i(class = "reddit alien icon"), "User"),
-            a(class = "item", `data-tab` = "subreddit", `data-value` = "subreddit", tags$i(class = "list icon"), "Subreddit")
+            a(
+              class = "active item", `data-tab` = "home", `data-value` = "home", 
+              tags$i(class = "home icon"), "Home"
+            ),
+            a(
+              class = "item", `data-tab` = "user", `data-value` = "user", 
+              tags$i(class = "reddit alien icon"), "User"
+            ),
+            a(
+              class = "item", `data-tab` = "votes", `data-value` = "votes", 
+              tags$i(class = "arrow alternate circle up icon"), "Votes"
+            ),
+            a(
+              class = "item", `data-tab` = "comments", `data-value` = "comments", 
+              tags$i(class = "comment dots icon"), "Comments"
+            ),
+            a(
+              class = "item", `data-tab` = "subreddit", `data-value` = "subreddit", 
+              tags$i(class = "list icon"), "Subreddit"
+            ),
           )
         )
       ),
@@ -60,6 +77,14 @@ shiny.semantic::semanticPage(
     div(
       class = "ui tab basic segment", `data-tab` = "user",
       user_page_ui("user")
+    ),
+    div(
+      class = "ui tab basic segment", `data-tab` = "votes",
+      votes_page_ui("votes")
+    ),
+    div(
+      class = "ui tab basic segment", `data-tab` = "comments",
+      div("comments")
     ),
     div(
       class = "ui tab basic segment", `data-tab` = "subreddit",
