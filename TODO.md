@@ -7,12 +7,12 @@
 
 ## Banner
 
-- [ ] When width small, only have logo and hamburger available
-- [ ] Add link to reddit site in dropdown
+- [x] When width small, only have logo and hamburger available
+- [x] Add link to reddit site in dropdown
 
 ## Pages 
 
-- [ ] Split between user, posts, comments and up/down votes
+- [x] Split between user, posts, comments and up/down votes
 
 ## Posts
 

@@ -63,45 +63,45 @@ Reddit <- R6::R6Class(
       httr::content(res)
     },
     
-    get_user_comments = function(user_name = self$user_name) {
+    get_user_comments = function(user_name = self$user_name, max_posts = 1000) {
       if (is.null(user_name)) return(NULL)
       if (user_name == self$user_name && !is.null(self$user_comments)) return(self$user_comments)
       
       comments <- get_user_activity(
-        user_name = user_name, access_token = private$access_token, api_call = "comments"
+        user_name = user_name, access_token = private$access_token, api_call = "comments", max_posts = max_posts
       )
       if (user_name == self$user_name) self$user_comments <- comments
       comments
     },
     
-    get_user_posts = function(user_name = self$user_name) {
+    get_user_posts = function(user_name = self$user_name, max_posts = 1000) {
       if (is.null(user_name)) return(NULL)
       if (user_name == self$user_name && !is.null(self$user_posts)) return(self$user_posts)
       
       posts <- get_user_activity(
-        user_name = user_name, access_token = private$access_token, api_call = "submitted"
+        user_name = user_name, access_token = private$access_token, api_call = "submitted", max_posts = max_posts
       )
       if (user_name == self$user_name) self$user_posts <- posts
       posts
     },
     
-    get_user_upvotes = function(user_name = self$user_name) {
+    get_user_upvotes = function(user_name = self$user_name, max_posts = 1000) {
       if (is.null(user_name)) return(NULL)
       if (user_name == self$user_name && !is.null(self$user_upvotes)) return(self$user_upvotes)
       
       comments <- get_user_activity(
-        user_name = user_name, access_token = private$access_token, api_call = "upvoted"
+        user_name = user_name, access_token = private$access_token, api_call = "upvoted", max_posts = max_posts
       )
       if (user_name == self$user_name) self$user_upvotes <- comments
       comments
     },
     
-    get_user_downvotes = function(user_name = self$user_name) {
+    get_user_downvotes = function(user_name = self$user_name, max_posts = 1000) {
       if (is.null(user_name)) return(NULL)
       if (user_name == self$user_name && !is.null(self$user_downvotes)) return(self$user_downvotes)
       
       comments <- get_user_activity(
-        user_name = user_name, access_token = private$access_token, api_call = "downvoted"
+        user_name = user_name, access_token = private$access_token, api_call = "downvoted", max_posts = max_posts
       )
       if (user_name == self$user_name) self$user_downvotes <- comments
       comments

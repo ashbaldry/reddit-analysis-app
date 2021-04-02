@@ -103,6 +103,7 @@ signed_in_dropdown <- function(reddit) {
           if (menu_val && (page_val !== menu_val)) {
             $('#page_select').dropdown('set selected', menu_val);
           }
+          $(this).trigger('shown');
         }
       });
       $('#page_select').dropdown({
@@ -112,6 +113,7 @@ signed_in_dropdown <- function(reddit) {
           if ((page_val !== menu_val)) {
             $('#user_menu').dropdown('set selected', page_val);
           }
+          $(this).trigger('shown');
         }
       });
       $('#user_menu .mobile-item').tab();
