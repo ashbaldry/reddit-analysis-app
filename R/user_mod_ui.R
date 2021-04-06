@@ -7,6 +7,19 @@ user_page_ui <- function(id) {
       class = "three column row",
       div(
         class = "column",
+        div(
+          class = "ui card",
+          uiOutput(class = "image", ns("user_icon")),
+          div(
+            class = "content",
+            div(class = "header shiny-text-output", id = ns("user_name")),
+            div(class = "meta", span(class = "date shiny-text-output", id = ns("account_age")))
+          )
+        )
+      ),
+      
+      div(
+        class = "column",
         reddit_segment(
           div(
             class = "ui two statistics",
@@ -19,33 +32,9 @@ user_page_ui <- function(id) {
               class = "statistic",
               div(id = ns("comm_karma"), class = "shiny-text-output value"),
               div(class = "label", "Comment Karma")
-            ),
-            div(
-              class = "statistic",
-              div(id = ns("post_ratio"), class = "shiny-text-output value"),
-              div(class = "label", "Post Upvote Ratio")
-            ),
-            div(
-              class = "statistic",
-              div(id = ns("comm_ratio"), class = "shiny-text-output value"),
-              div(class = "label", "Comment Upvote Ratio")
-            ),
-            div(
-              class = "statistic",
-              div(id = ns("post_contro"), class = "shiny-text-output value"),
-              div(class = "label", "Post Controversiality")
-            ),
-            div(
-              class = "statistic",
-              div(id = ns("comm_contro"), class = "shiny-text-output value"),
-              div(class = "label", "Comment Controversiality")
             )
           )
         )
-      ),
-      div(
-        class = "column",
-        reddit_segment(NULL)
       ),
       
       div(
