@@ -28,29 +28,29 @@ shiny.semantic::semanticPage(
         class = "item",
         div(
           class = "ui selection dropdown", id = "page_select",
-          div(class = "text", tags$i(class = "home icon"), "Home"), 
+          div(class = "text", shiny.semantic::icon("blue home"), "Home"), 
           tags$i(class = "dropdown icon"),
           div(
             class = "menu",
             a(
               class = "active item", `data-tab` = "home", `data-value` = "home", 
-              tags$i(class = "home icon"), "Home"
+              shiny.semantic::icon("blue home"), "Home"
             ),
             a(
               class = "item", `data-tab` = "user", `data-value` = "user", 
-              tags$i(class = "reddit alien icon"), "User"
+              shiny.semantic::icon("blue reddit alien"), "User"
             ),
             a(
               class = "item", `data-tab` = "votes", `data-value` = "votes", 
-              tags$i(class = "arrow alternate circle up icon"), "Votes"
+              shiny.semantic::icon("blue arrow alternate circle up"), "Votes"
             ),
             a(
               class = "item", `data-tab` = "comments", `data-value` = "comments", 
-              tags$i(class = "comment dots icon"), "Comments"
+              shiny.semantic::icon("blue comment dots"), "Comments"
             ),
             a(
               class = "item", `data-tab` = "subreddit", `data-value` = "subreddit", 
-              tags$i(class = "list icon"), "Subreddit"
+              shiny.semantic::icon("blue list ol"), "Subreddit"
             ),
           )
         )
@@ -58,7 +58,7 @@ shiny.semantic::semanticPage(
       
       menu_item(
         item_feature = "ui right",
-        uiOutput("login_button", inline = TRUE)
+        uiOutput("settings_dropdown", inline = TRUE)
       )
     )
   ),
@@ -84,7 +84,7 @@ shiny.semantic::semanticPage(
     ),
     div(
       class = "ui tab basic segment", `data-tab` = "comments",
-      div("comments")
+      comments_page_ui("comments")
     ),
     div(
       class = "ui tab basic segment", `data-tab` = "subreddit",

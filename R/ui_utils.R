@@ -88,6 +88,10 @@ signed_in_dropdown <- function(reddit) {
           shiny.semantic::icon("external alternate"), "Visit Reddit",
           href = "https://www.reddit.com", target = "_blank"
         ),
+        shiny.semantic::menu_item(
+          shiny.semantic::icon("github"), "GitHub",
+          href = "https://www.github.com/ashbaldry/reddit-analysis-app", target = "_blank"
+        ),
         shiny.semantic::menu_divider(),
         shiny.semantic::menu_item(
           id = "logout_button", class = "action-button", 
@@ -118,6 +122,44 @@ signed_in_dropdown <- function(reddit) {
       });
       $('#user_menu .mobile-item').tab();
       $('#user_menu').dropdown('set selected', 'user');
+    "))
+  )
+}
+
+signed_out_dropdown <- function(reddit) {
+  tagList(
+    div(
+      id = "user_menu",
+      name = "user_menu",
+      class = "ui dropdown right-float",
+      span(
+        class = "login-icon-header",
+        shiny.semantic::icon(class = "large grey user"),
+        shiny.semantic::icon(class = "grey dropdown")
+      ),
+      shiny.semantic::menu(
+        class = "fluid",
+        shiny.semantic::menu_item(
+          id = "login_button",  
+          href = reddit$get_auth_uri(),
+          shiny.semantic::icon("sign in alternate"), "Sign In"
+        ),
+        shiny.semantic::menu_divider(),
+        shiny.semantic::menu_item(
+          shiny.semantic::icon("external alternate"), "Visit Reddit",
+          href = "https://www.reddit.com", target = "_blank"
+        ),
+        shiny.semantic::menu_item(
+          shiny.semantic::icon("github"), "GitHub",
+          href = "https://www.github.com/ashbaldry/reddit-analysis-app", target = "_blank"
+        )
+      )
+    ),
+    tags$script(HTML("
+      $('#user_menu').dropdown({
+        direction: 'downward',
+        context: 'header'
+      });
     "))
   )
 }

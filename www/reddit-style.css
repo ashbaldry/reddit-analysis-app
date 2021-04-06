@@ -27,6 +27,10 @@ body, .ui.tab.segment {
   }
 }
 
+.login-icon-header {
+  padding-left: 100px;
+}
+
 .user-header-item.ui.items>.item .meta {
   margin: 0;
 }
