@@ -22,6 +22,7 @@ get_user_activity <- function(user_name, access_token, api_call = "comments", ma
     for (i in multi_items) y[[i]] <- list(y[[i]])
     
     y$created <- as.POSIXct(y$created, origin = "1970-01-01", tz = "UTC")
+    y$created_utc <- as.POSIXct(y$created_utc, origin = "1970-01-01", tz = "UTC")
     
     as.data.table(y)
   }

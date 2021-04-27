@@ -1,6 +1,6 @@
 function(input, output, session) {
   # Reddit Reactive
-  reddit <<- Reddit$new(client_id, client_secret, redirect_uri)
+  reddit <- Reddit$new(client_id, client_secret, redirect_uri)
   rr <- reactive(reddit$get_reactive())
   
   #### Log In/Out ####

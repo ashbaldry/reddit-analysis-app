@@ -5,15 +5,17 @@ votes_page_server <- function(input, output, session, reddit, rr) {
     rr()
     if (!reddit$is_authorized()) return(NULL)
     shiny.semantic::show_modal(ns("vote_modal"))
-    reddit$get_user_upvotes(max_posts = 100)
+    reddit$get_user_upvotes(max_posts = 1000)
   })
   
   user_downvotes <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    dt <- reddit$get_user_downvotes(max_posts = 100)
-    shiny.semantic::hide_modal(ns("vote_modal"))
-    dt
+    reddit$get_user_downvotes(max_posts = 1000)
+  })
+  
+  observe({
+    if (!is.null(user_downvotes())) shiny.semantic::hide_modal(ns("vote_modal"))
   })
   
   output$upvote_plt <- highcharter::renderHighchart({
@@ -26,5 +28,9 @@ votes_page_server <- function(input, output, session, reddit, rr) {
   
   output$vote_ratio_plt <- highcharter::renderHighchart({
     vote_ratio_chart(user_upvotes(), user_downvotes())
+  })
+  
+  output$vote_time_plt <- highcharter::renderHighchart({
+    vote_time_chart(user_upvotes(), user_downvotes())
   })
 }
