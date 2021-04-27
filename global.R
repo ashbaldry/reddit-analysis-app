@@ -22,3 +22,6 @@ if (!interactive()) {
   client_secret <- Sys.getenv("local_client_secret")
   redirect_uri <- "http://127.0.0.1:8100"
 }
+
+upvote_colour <- "#FF8B60"
+downvote_colour <- "#9494FF"

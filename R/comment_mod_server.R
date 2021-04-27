@@ -6,7 +6,7 @@ comments_page_server <- function(input, output, session, reddit, rr) {
     rr()
     if (!reddit$is_authorized()) return(NULL)
     shiny.semantic::show_modal(ns("comments_modal"))
-    reddit$get_user_posts(max_posts = 100)
+    reddit$get_user_posts(max_posts = 1000)
   })
   
   #### Post Stats ####
@@ -36,7 +36,7 @@ comments_page_server <- function(input, output, session, reddit, rr) {
   user_comments <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    dt <- reddit$get_user_comments(max_posts = 100)
+    dt <- reddit$get_user_comments(max_posts = 1000)
     shiny.semantic::hide_modal(ns("comments_modal"))
     dt
   })

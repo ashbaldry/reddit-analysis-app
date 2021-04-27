@@ -13,7 +13,17 @@ user_page_ui <- function(id) {
           div(
             class = "content",
             div(class = "header shiny-text-output", id = ns("user_name")),
-            div(class = "meta", span(class = "date shiny-text-output", id = ns("account_age")))
+            div(
+              class = "meta", 
+              div(
+                reddit_karma_icon("banner-karma-icon"),
+                span(class = "shiny-text-output", id = ns("total_karma")), "karma"
+              ),
+              div(
+                tags$i(class = "birthday cake icon cake-day-icon"),
+                span(class = "date shiny-text-output", id = ns("cake_day"))  
+              )
+            )
           )
         )
       ),
@@ -32,6 +42,16 @@ user_page_ui <- function(id) {
               class = "statistic",
               div(id = ns("comm_karma"), class = "shiny-text-output value"),
               div(class = "label", "Comment Karma")
+            ),
+            div(
+              class = "statistic",
+              div(id = ns("awarder_karma"), class = "shiny-text-output value"),
+              div(class = "label", "Awarder Karma")
+            ),
+            div(
+              class = "statistic",
+              div(id = ns("awardee_karma"), class = "shiny-text-output value"),
+              div(class = "label", "Awardee Karma")
             )
           )
         )

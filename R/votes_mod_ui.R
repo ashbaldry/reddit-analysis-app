@@ -43,6 +43,18 @@ votes_page_ui <- function(id) {
           highcharter::highchartOutput(ns("vote_ratio_plt"), height = "450px")
         )
       )
+    ),
+    
+    div(
+      class = "two column row",
+      div(
+        class = "column",
+        reddit_segment(
+          tagList(
+            highcharter::highchartOutput(ns("vote_time_plt"), height = "300px")
+          )
+        )
+      )
     )
   )
 }

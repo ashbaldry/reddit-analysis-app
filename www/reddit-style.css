@@ -39,13 +39,17 @@ body, .ui.tab.segment {
   float: right;
 }
 
-.banner-avatar-image {
-  
+.cake-day-icon {
+  margin-right: 2px;
 }
 
 .banner-karma-icon {
   height: 10px;
   fill: #ff4500;
+}
+
+.ui.card .banner-karma-icon {
+  margin-left: 2px;
 }
 
 .ui.grid.padded-grid {
