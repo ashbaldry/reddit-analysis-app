@@ -57,7 +57,7 @@ vote_ratio_chart <- function(up_dt, down_dt) {
       min = -1, max = 1
     ) %>%
     highcharter::hc_title(
-      text = "Top Voted Subreddits Upvote/Downvote Ratio"
+      text = "Top Voted Subreddits Up/Downvote Ratio"
     ) %>%
     highcharter::hc_legend(
       enabled = FALSE
@@ -97,4 +97,37 @@ vote_time_chart <- function(up_dt, down_dt) {
     highcharter::hc_yAxis(
       categories = weekday_abbr
     )
+}
+
+get_post_type <- function(post_hint, is_video, url) {
+  fcoalesce(
+    sub("\\w+:", "", post_hint),
+    # fifelse(post_hint == "rich:video", "gif", sub("\\w+:", "", post_hint)), 
+    fifelse(
+      is_video, "video",
+      fifelse(grepl("i.redd.it", url), "image", fifelse(grepl("v.redd.it", url), "video", "text"))
+    )
+  )
+}
+
+get_vote_demo <- function(dt) {
+  summ_dt <- dt[
+    ,
+    .(votes = .N, upvote = mean(upvote_ratio)),
+    by = .(post_type)
+  ]
+  summ_dt[, percent := votes / sum(votes)]
+  summ_dt
+}
+
+vote_type_tbl <- function(up_dt, down_dt) {
+  up_dt[, post_type := get_post_type(post_hint, is_video, url)]
+  down_dt[, post_type := get_post_type(post_hint, is_video, url)]
+  
+  info_dt <- rbindlist(list(
+    data.table(type = "Upvote", get_vote_demo(up_dt)),
+    data.table(type = "Downvote", get_vote_demo(down_dt))
+  ))
+  info_dt[, ud_percent := votes / sum(votes), by = .(post_type)]
+  info_dt
 }
