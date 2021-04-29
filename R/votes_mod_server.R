@@ -11,11 +11,9 @@ votes_page_server <- function(input, output, session, reddit, rr) {
   user_downvotes <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    reddit$get_user_downvotes(max_posts = 1000)
-  })
-  
-  observe({
-    if (!is.null(user_downvotes())) shiny.semantic::hide_modal(ns("vote_modal"))
+    dt <- reddit$get_user_downvotes(max_posts = 1000)
+    shiny.semantic::hide_modal(ns("vote_modal"))
+    dt
   })
   
   output$upvote_plt <- highcharter::renderHighchart({
