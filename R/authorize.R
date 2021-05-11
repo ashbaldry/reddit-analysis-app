@@ -51,7 +51,7 @@ get_reddit_access_token <- function(auth_code, redirect_uri, client_id, client_s
     config = c(httr::authenticate(client_id, client_secret)), 
     body = glue::glue("grant_type=authorization_code&code={auth_code}&redirect_uri={redirect_uri}"),
     httr::content_type("application/x-www-form-urlencoded"),
-    httr::user_agent("httr")
+    httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)")
   )
   
   httr::content(result)

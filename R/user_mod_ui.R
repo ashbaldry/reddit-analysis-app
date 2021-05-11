@@ -8,7 +8,7 @@ user_page_ui <- function(id) {
       div(
         class = "column",
         div(
-          class = "ui card",
+          class = "ui centered card",
           uiOutput(class = "image", ns("user_icon")),
           div(
             class = "content",
@@ -59,7 +59,16 @@ user_page_ui <- function(id) {
       
       div(
         class = "column",
-        reddit_segment(NULL)
+        reddit_segment(
+          div(
+            class = "ui one statistics",
+            div(
+              class = "statistic",
+              div(id = ns("n_subreddit"), class = "shiny-text-output value"),
+              div(class = "label", "Subreddits Subscribed To")
+            )
+          )
+        )
       )
     )
   )
