@@ -5,9 +5,11 @@ $(window).on('load', function() {
 });
 
 $(document).on('shiny:connected', function(event) {
-    if (window.location.search !== '') {
+  if (window.location.search !== '') {
     $('.dropdown_name_user_menu .mobile-item').tab();
     $('#page_select').dropdown('set selected', 'user');
     $('#page_select a.item').tab('change tab', 'user');
+  } else {
+    $('#page_select .signed-in-item').hide();
   }
 });

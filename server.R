@@ -3,6 +3,9 @@ function(input, output, session) {
   reddit <- Reddit$new(client_id, client_secret, redirect_uri)
   rr <- reactive(reddit$get_reactive())
   
+  #### Home Page ####
+  callModule(user_home_server, "home")
+  
   #### Log In/Out ####
   login_button <- reactive({
       a(class = "ui right floated orange button", href = reddit$get_auth_uri(), "Sign In")

@@ -1,5 +1,9 @@
 body {
-  font-family: 'IBM Plex Sans', IBMPlexSans, Arial, BentonSans, sans-serif;
+  font-family: Noto Sans, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, .ui.header {
+  font-family: IBMPlexSans, Arial, sans-serif!important;
 }
 
 body, .ui.tab.segment {
@@ -58,4 +62,8 @@ body, .ui.tab.segment {
 
 .grey-sidebar {
   background-color: #FBFBFB;
+}
+
+.centered-reddit-post {
+  text-align: center;
 }

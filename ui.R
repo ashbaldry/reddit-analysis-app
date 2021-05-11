@@ -37,15 +37,15 @@ shiny.semantic::semanticPage(
               shiny.semantic::icon("blue home"), "Home"
             ),
             a(
-              class = "item", `data-tab` = "user", `data-value` = "user", 
+              class = "signed-in-item item", `data-tab` = "user", `data-value` = "user", 
               shiny.semantic::icon("blue reddit alien"), "User"
             ),
             a(
-              class = "item", `data-tab` = "votes", `data-value` = "votes", 
+              class = "signed-in-item item", `data-tab` = "votes", `data-value` = "votes", 
               shiny.semantic::icon("blue arrow alternate circle up"), "Votes"
             ),
             a(
-              class = "item", `data-tab` = "comments", `data-value` = "comments", 
+              class = "signed-in-item item", `data-tab` = "comments", `data-value` = "comments", 
               shiny.semantic::icon("blue comment dots"), "Comments"
             ),
             a(
@@ -66,13 +66,7 @@ shiny.semantic::semanticPage(
   tags$main(
     div(
       class = "ui tab basic segment active", `data-tab` = "home",
-      h2("Welcome!"),
-      p("This app is used to take a look into historical Reddit posts and behaviour..."),
-      p("To get your results, please sign in"),
-      a(class = "ui inverted orange button", 
-        href = auth_reddit_uri(client_id, redirect_uri, c("identity", "read", "history")), 
-        "Sign In"
-      )
+      user_home_ui("home")
     ),
     div(
       class = "ui tab basic segment", `data-tab` = "user",
