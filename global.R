@@ -25,3 +25,8 @@ if (!interactive()) {
 
 upvote_colour <- "#FF8B60"
 downvote_colour <- "#9494FF"
+
+#### Highcharts ####
+hc_opts <- getOption("highcharter.chart")
+hc_opts$chart$style$fontFamily <- "Noto Sans, Arial, sans-serif"
+options(highcharter.chart = hc_opts)
