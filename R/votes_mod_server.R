@@ -4,7 +4,7 @@ votes_page_server <- function(input, output, session, reddit, rr) {
   user_upvotes <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    shiny.semantic::show_modal(ns("vote_modal"))
+    shiny.semantic::show_modal("vote_modal")
     reddit$get_user_upvotes(max_posts = 1000)
   })
   
@@ -12,7 +12,7 @@ votes_page_server <- function(input, output, session, reddit, rr) {
     rr()
     if (!reddit$is_authorized()) return(NULL)
     dt <- reddit$get_user_downvotes(max_posts = 1000)
-    shiny.semantic::hide_modal(ns("vote_modal"))
+    shiny.semantic::hide_modal("vote_modal")
     dt
   })
   

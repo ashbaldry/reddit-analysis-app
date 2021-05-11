@@ -46,7 +46,7 @@ vote_ratio_chart <- function(up_dt, down_dt) {
       highcharter::hcaes(x = subreddit, y = ratio, color = bar_color, up = upvote, down = downvote),
       type = "bar", name = "Ratio",
       tooltip = list(
-        pointFormat = "Ratio: <b>{point.value}</b><br/>Upvotes: <b>{point.up}</b> Downvotes: <b>{point.down}</b>",
+        pointFormat = "Ratio: <b>{point.y}</b><br/>Upvotes: <b>{point.up}</b> Downvotes: <b>{point.down}</b>",
         valueDecimals = 2
       )
     ) %>%
@@ -61,41 +61,6 @@ vote_ratio_chart <- function(up_dt, down_dt) {
     ) %>%
     highcharter::hc_legend(
       enabled = FALSE
-    )
-}
-
-weekday_abbr <- c("Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun")
-
-vote_time_chart <- function(up_dt, down_dt) {
-  up_time_dt <- up_dt[, .(up = .N), keyby = .(day = wday(created_utc), hour = hour(created_utc))]
-  up_time_dt <- up_time_dt[CJ(day = 1:7, hour = 0:23)]
-  set(up_time_dt, which(is.na(up_time_dt$up)), "up", 0)
-  
-  down_time_dt <- down_dt[, .(down = .N), keyby = .(day = wday(created_utc), hour = hour(created_utc))]
-  down_time_dt <- down_time_dt[CJ(day = 1:7, hour = 0:23)]
-  set(down_time_dt, which(is.na(down_time_dt$down)), "down", 0)
-  
-  time_dt <- merge(up_time_dt, down_time_dt, by = c("day", "hour"))
-  time_dt[, wday := factor(day, labels = weekday_abbr)]
-  time_dt[up != 0 | down != 0, diff := up - down]
-  
-  highcharter::highchart() %>%
-    highcharter::hc_chart(
-      type = "heatmap"
-    ) %>%
-    highcharter::hc_add_series(
-      time_dt, type = "heatmap",
-      highcharter::hcaes(x = hour, y = wday, value = diff)
-    ) %>%
-    highcharter::hc_colorAxis(
-      stops = list(
-        list(0, downvote_colour), 
-        list(time_dt[, (0 - min(diff)) / (max(diff) - min(diff))], "#FFFFFF"), 
-        list(1, upvote_colour)
-      )
-    ) %>%
-    highcharter::hc_yAxis(
-      categories = weekday_abbr
     )
 }
 

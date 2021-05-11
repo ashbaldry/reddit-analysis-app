@@ -8,6 +8,8 @@ Reddit <- R6::R6Class(
     user_info = NULL,
     user_name = NULL,
     user_posts = NULL,
+    user_subreddits = NULL,
+    user_subreddit_karma = NULL,
     user_comments = NULL,
     user_upvotes = NULL,
     user_downvotes = NULL,
@@ -26,7 +28,7 @@ Reddit <- R6::R6Class(
       auth_reddit_uri(
         private$client_id, 
         private$redirect_uri, 
-        c("identity", "read", "history")
+        c("identity", "read", "history", "mysubreddits")
       )
     },
     
@@ -85,6 +87,20 @@ Reddit <- R6::R6Class(
       posts
     },
     
+    get_subscribed_subreddits = function() {
+      if (!is.null(self$user_subreddit_karma)) return(self$user_subreddits)
+      
+      self$user_subreddits <- get_subscribed_subreddits(access_token = private$access_token)
+      self$user_subreddits
+    },
+    
+    get_subreddit_karma = function() {
+      if (!is.null(self$user_subreddit_karma)) return(self$user_subreddit_karma)
+      
+      self$user_subreddit_karma <- get_subreddit_karma(access_token = private$access_token)
+      self$user_subreddit_karma
+    },
+    
     get_user_upvotes = function(user_name = self$user_name, max_posts = 1000) {
       if (is.null(user_name)) return(NULL)
       if (user_name == self$user_name && !is.null(self$user_upvotes)) return(self$user_upvotes)
@@ -115,6 +131,8 @@ Reddit <- R6::R6Class(
       self$user_info <- NULL
       self$user_name <- NULL
       self$user_posts <- NULL
+      self$user_subreddits <- NULL
+      self$user_subreddit_karma <- NULL
       self$user_comments <- NULL
       self$user_upvotes <- NULL
       self$user_downvotes <- NULL

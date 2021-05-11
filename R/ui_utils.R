@@ -9,7 +9,7 @@ reddit_karma_icon <- function(class) {
   )
 }
 
-reddit_segment <- function(main_content, sidebar = NULL) {
+reddit_segment <- function(..., sidebar = NULL) {
   div(
     class = "ui segment",
     div(
@@ -20,7 +20,7 @@ reddit_segment <- function(main_content, sidebar = NULL) {
       ),
       div(
         class = "fifteen wide column",
-        main_content
+        ...
       )
     )
   )
