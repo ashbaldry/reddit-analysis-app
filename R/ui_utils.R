@@ -110,6 +110,7 @@ signed_in_dropdown <- function(reddit) {
           $(this).trigger('shown');
         }
       });
+      
       $('#page_select').dropdown({
         onChange: function() {
           var page_val = $(this).dropdown('get value');
@@ -120,8 +121,15 @@ signed_in_dropdown <- function(reddit) {
           $(this).trigger('shown');
         }
       });
+      
       $('#user_menu .mobile-item').tab();
       $('#user_menu').dropdown('set selected', 'user');
+      
+      $('#logout_button').on('click', function() { 
+        $('#user_menu').dropdown('set selected', 'home');
+        $('#page_select a.item').tab('change tab', 'home');
+        $('#page_select .signed-in-item').hide(); 
+      });
     "))
   )
 }
