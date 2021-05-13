@@ -28,5 +28,5 @@ downvote_colour <- "#9494FF"
 
 #### Highcharts ####
 hc_opts <- getOption("highcharter.chart")
-hc_opts$chart$style$fontFamily <- "Noto Sans, Arial, sans-serif"
+hc_opts$chart$style$fontFamily <- "Noto Sans"
 options(highcharter.chart = hc_opts)

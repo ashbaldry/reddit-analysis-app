@@ -2,9 +2,11 @@ user_page_ui <- function(id) {
   ns <- NS(id)
   
   div(
+    class = "ui container",
+  div(
     class = "ui stackable grid padded-grid",
     div(
-      class = "three column row",
+      class = "two column row",
       div(
         class = "column",
         div(
@@ -25,6 +27,17 @@ user_page_ui <- function(id) {
               )
             )
           )
+        ),
+        
+        reddit_segment(
+          div(
+            class = "ui one statistics",
+            div(
+              class = "statistic",
+              div(id = ns("n_subreddit"), class = "shiny-text-output value"),
+              div(class = "label", "Subreddits Subscribed To")
+            )
+          )
         )
       ),
       
@@ -32,11 +45,11 @@ user_page_ui <- function(id) {
         class = "column",
         reddit_segment(
           div(
-            class = "ui two statistics",
+            class = "ui two stackable statistics",
             div(
               class = "statistic",
               div(id = ns("post_karma"), class = "shiny-text-output value"),
-              div(class = "label", "Post Karma")
+              div(class = "label", "Submission Karma")
             ),
             div(
               class = "statistic",
@@ -55,21 +68,9 @@ user_page_ui <- function(id) {
             )
           )
         )
-      ),
-      
-      div(
-        class = "column",
-        reddit_segment(
-          div(
-            class = "ui one statistics",
-            div(
-              class = "statistic",
-              div(id = ns("n_subreddit"), class = "shiny-text-output value"),
-              div(class = "label", "Subreddits Subscribed To")
-            )
-          )
-        )
       )
+      
     )
+  )
   )
 }

@@ -33,8 +33,8 @@ function(input, output, session) {
   #### Content Pages ####
   callModule(user_page_server, "user", reddit = reddit, rr = rr)
   callModule(votes_page_server, "votes", reddit = reddit, rr = rr)
-  callModule(comments_page_server, "comments", reddit = reddit, rr = rr)
-  
+  callModule(comments_page_server, "posts", reddit = reddit, rr = rr, type = "Posts", text_col = "title")
+  callModule(comments_page_server, "comments", reddit = reddit, rr = rr, type = "Comments", text_col = "body")
   
   #### Subreddit Page ####
   selected_sub <- reactive(input$sub_search)

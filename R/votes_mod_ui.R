@@ -4,7 +4,7 @@ votes_page_ui <- function(id) {
     class = "ui stackable grid padded-grid", id = ns("page_grid"),
     div(
       class = "ui top aligned modal", id = ns("vote_modal"),
-      h4(class = "ui header", "Pulling upvoted and downvoted posts from Reddit..."),
+      h4(class = "ui header", "Pulling upvoted and downvoted posts from Reddit (this may take a while)..."),
       div(
         class = "content", 
         div(class = "ui large inline centered active orange loader")
@@ -22,12 +22,17 @@ votes_page_ui <- function(id) {
       div(
         class = "column",
         reddit_segment(
-          highcharter::highchartOutput(ns("upvote_plt"), height = "330px")
+          h2("Information"),
+          p("The last 1,000 upvotes and 1,000 downvotes have been pulled from Reddit to determine where you vote the most."),
+          p()
         )
       ),
       
       div(
         class = "column",
+        reddit_segment(
+          highcharter::highchartOutput(ns("upvote_plt"), height = "330px")
+        ),
         reddit_segment(
           highcharter::highchartOutput(ns("downvote_plt"), height = "330px")
         )
