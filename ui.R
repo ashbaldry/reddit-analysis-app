@@ -69,6 +69,14 @@ shiny.semantic::semanticPage(
   
   tags$main(
     div(
+      class = "ui top aligned modal", id = "load_modal",
+      h4(class = "ui header", "Pulling user activity from Reddit (this may take a while)..."),
+      div(
+        class = "content", 
+        div(class = "ui large inline centered active orange loader")
+      )
+    ),
+    div(
       class = "ui tab basic segment active", `data-tab` = "home",
       user_home_ui("home")
     ),

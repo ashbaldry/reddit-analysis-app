@@ -15,6 +15,9 @@ $(document).on('shiny:connected', function(event) {
     $('.login-prompt').show();
   }
   
+  Shiny.initSemanticModal('load_modal'); 
+  $('#load_modal').modal({ closable: false });
+  
   $('.subreddit-search-dd').dropdown('setting', 'ignoreDiacritics', true);
   $('.subreddit-search-dd').dropdown('setting', 'fullTextSearch', 'exact');
 });
