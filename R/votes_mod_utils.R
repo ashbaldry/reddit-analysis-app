@@ -38,8 +38,8 @@ vote_agree_data <- function(up_dt, down_dt) {
 vote_agree_chart <- function(dt) {
   labels <- c(
     "",
-    glue::glue("Upvote<br/>Average:{dt[type == 'Upvote', scales::percent(mean(agree_ratio))]}"),
-    glue::glue("Downvote<br/>Average:{dt[type == 'Downvote', scales::percent(mean(agree_ratio))]}")
+    glue::glue("Downvote<br/>Average:{dt[type == 'Downvote', scales::percent(mean(agree_ratio))]}"),
+    glue::glue("Upvote<br/>Average:{dt[type == 'Upvote', scales::percent(mean(agree_ratio))]}")
   )
   
   highcharter::highchart() %>%
@@ -79,7 +79,7 @@ vote_agree_chart <- function(dt) {
     highcharter::hc_colors(c(downvote_colour, upvote_colour))
 }
 
-vote_ratio_chart <- function(up_dt, down_dt) {
+vote_ratio_chart <- function(up_dt, down_dt, n = 20) {
   if (is.null(up_dt) || is.null(down_dt)) return(highcharter::highchart())
   up_cnt_dt <- up_dt[, .(upvote = .N), by = .(subreddit = subreddit_name_prefixed)]
   setorder(up_cnt_dt, -upvote)
@@ -93,7 +93,7 @@ vote_ratio_chart <- function(up_dt, down_dt) {
   cnt_dt[, count := upvote + downvote]
   setorder(cnt_dt, -count)
   
-  plt_dt <- cnt_dt[seq(min(15, .N))]
+  plt_dt <- cnt_dt[seq(min(n, .N))]
   plt_dt[, ratio := (upvote - downvote) / (upvote + downvote)]
   plt_dt[, bar_color := fifelse(ratio >= 0, upvote_colour, downvote_colour)]
   plt_dt[, ratio_order := fifelse(ratio >= 0, count, -count)]

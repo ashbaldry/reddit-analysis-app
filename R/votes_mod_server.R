@@ -16,7 +16,7 @@ votes_page_server <- function(input, output, session, reddit, rr) {
     dt
   })
   
-  observeEvent(user_downvotes(), {
+  observeEvent(user_downvotes(), ignoreInit = TRUE, {
     if (!reddit$is_authorized()) {
       shiny.semantic::update_dropdown_input(session, "agree_sr", "All", value = "All")      
     } else {

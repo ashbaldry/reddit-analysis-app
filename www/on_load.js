@@ -14,4 +14,7 @@ $(document).on('shiny:connected', function(event) {
     $('#page_select .signed-in-item').hide();
     $('.login-prompt').show();
   }
+  
+  $('.subreddit-search-dd').dropdown('setting', 'ignoreDiacritics', true);
+  $('.subreddit-search-dd').dropdown('setting', 'fullTextSearch', 'exact');
 });

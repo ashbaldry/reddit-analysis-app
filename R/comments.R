@@ -2,7 +2,7 @@ get_user_activity <- function(user_name, access_token, api_call = "comments", ma
   res <- httr::GET(
     glue::glue("https://oauth.reddit.com/user/{user_name}/{api_call}"),
     httr::add_headers(Authorization = access_token),
-    httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)")
+    httr::user_agent(glue::glue("shiny:ashbaldry.shinyapps.io:v1.0.0 {Sys.time()} (by /u/AshenCoder)"))
   )
   
   httr::stop_for_status(res)
@@ -34,7 +34,7 @@ get_user_activity <- function(user_name, access_token, api_call = "comments", ma
     res <- httr::GET(
       glue::glue("https://oauth.reddit.com/user/{user_name}/{api_call}"),
       httr::add_headers(Authorization = access_token),
-      httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)"),
+      httr::user_agent(glue::glue("shiny:ashbaldry.shinyapps.io:v1.0.0 {Sys.time()} (by /u/AshenCoder)")),
       query = list(after = cont$data$after, count = count)
     )
     
@@ -52,7 +52,7 @@ get_subreddit_karma <- function(access_token) {
   res <- httr::GET(
     glue::glue("https://oauth.reddit.com/api/v1/me/karma"),
     httr::add_headers(Authorization = access_token),
-    httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)")
+    httr::user_agent(glue::glue("shiny:ashbaldry.shinyapps.io:v1.0.0 {Sys.time()} (by /u/AshenCoder)"))
   )
   
   httr::stop_for_status(res)
@@ -64,7 +64,7 @@ get_subscribed_subreddits <- function(access_token) {
   res <- httr::GET(
     glue::glue("https://oauth.reddit.com/subreddits/mine/subscriber"),
     httr::add_headers(Authorization = access_token),
-    httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)"),
+    httr::user_agent(glue::glue("shiny:ashbaldry.shinyapps.io:v1.0.0 {Sys.time()} (by /u/AshenCoder)")),
     query = list(show = "all", limit = 100)
   )
   
@@ -98,7 +98,7 @@ get_subscribed_subreddits <- function(access_token) {
     res <- httr::GET(
       glue::glue("https://oauth.reddit.com/subreddits/mine/subscriber"),
       httr::add_headers(Authorization = access_token),
-      httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)"),
+      httr::user_agent(glue::glue("shiny:ashbaldry.shinyapps.io:v1.0.0 {Sys.time()} (by /u/AshenCoder)")),
       query = list(after = cont$data$after, count = count)
     )
     

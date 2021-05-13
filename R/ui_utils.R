@@ -9,22 +9,7 @@ reddit_karma_icon <- function(class) {
   )
 }
 
-reddit_segment <- function(..., sidebar = NULL) {
-  div(
-    class = "ui segment",
-    div(
-      class = "ui grid",
-      div(
-        class = "one wide column grey-sidebar",
-        sidebar
-      ),
-      div(
-        class = "fifteen wide column",
-        ...
-      )
-    )
-  )
-}
+reddit_segment <- function(...) div(class = "ui segment reddit-segment", div(class = "reddit-content", ...))
 
 signed_in_dropdown <- function(reddit) {
   tagList(
