@@ -60,8 +60,16 @@ body, .ui.tab.segment {
   padding: 1rem;
 }
 
-.grey-sidebar {
-  background-color: #FBFBFB;
+.ui.segment.reddit-segment {
+  border-radius: 4px;
+  padding: 0 0 0 40px;
+  background-color: #ffffff80;
+}
+
+.ui.segment.reddit-segment .reddit-content {
+  background-color: #ffffff;
+  height:100%;
+  padding: 10px;
 }
 
 .centered-reddit-post {
