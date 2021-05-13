@@ -65,23 +65,27 @@ signed_in_dropdown <- function(reddit) {
         class = "fluid",
         a(
           class = "mobile-item item", `data-tab` = "home", `data-value` = "home", 
-          tags$i(class = "home icon"), "Home"
+          shiny.semantic::icon("home"), "Home"
         ),
         a(
           class = "mobile-item active item", `data-tab` = "user", `data-value` = "user", 
-          tags$i(class = "reddit alien icon"), "User"
+          shiny.semantic::icon("reddit alien"), "User"
         ),
         a(
           class = "mobile-item item", `data-tab` = "votes", `data-value` = "votes", 
-          tags$i(class = "arrow alternate circle up icon"), "Votes"
+          shiny.semantic::icon("arrow alternate circle up"), "Votes"
+        ),
+        a(
+          class = "mobile-item item", `data-tab` = "posts", `data-value` = "posts", 
+          shiny.semantic::icon("edit"), "Posts"
         ),
         a(
           class = "mobile-item item", `data-tab` = "comments", `data-value` = "comments", 
-          tags$i(class = "comment dots icon"), "Comments"
+          shiny.semantic::icon("comment dots"), "Comments"
         ),
         a(
           class = "mobile-item item", `data-tab` = "subreddit", `data-value` = "subreddit", 
-          tags$i(class = "list icon"), "Subreddit"
+          shiny.semantic::icon("list"), "Subreddit"
         ),
         shiny.semantic::menu_divider(class = "mobile-item"),
         shiny.semantic::menu_item(

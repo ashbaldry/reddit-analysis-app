@@ -1,45 +1,23 @@
-comments_page_server <- function(input, output, session, reddit, rr) {
+comments_page_server <- function(input, output, session, reddit, rr, type = "Comments", text_col = "body") {
   ns <- session$ns
   
-  #### Posts ####
-  user_posts <- reactive({
-    rr()
-    if (!reddit$is_authorized()) return(NULL)
-    shiny.semantic::show_modal(ns("comments_modal"))
-    reddit$get_user_posts(max_posts = 1000)
-  })
-  
-  #### Post Stats ####
-  post_score <- reactive({
-    if (is.null(user_posts()) || !nrow(user_posts())) return(NA)
-    user_posts()[, sum(score)]
-  })
-  output$post_score <- renderText(post_score())
-  
-  post_up_cnt <- reactive({
-    if (is.null(user_posts()) || !nrow(user_posts())) return(NULL)
-    user_posts()[, sum(ups)]
-  })
-  
-  post_down_cnt <- reactive({
-    if (is.null(user_posts()) || !nrow(user_posts())) return(NULL)
-    user_posts()[, sum(ups / upvote_ratio * (1 - upvote_ratio))]
-  })
-  
-  post_ratio <- reactive({
-    if (is.null(user_posts()) || !nrow(user_posts())) return(NA_real_)
-    post_up_cnt() / (post_up_cnt() + post_down_cnt())
-  })
-  output$post_ratio <- renderText(scales::percent(post_ratio()))
-  
-  #### Comments ####
+  #### Data Pull ####
   user_comments <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    dt <- reddit$get_user_comments(max_posts = 1000)
+    shiny.semantic::show_modal(ns("comments_modal"))
+    dt <- reddit[[glue::glue("get_user_{tolower(type)}")]](max_posts = 1000)
     shiny.semantic::hide_modal(ns("comments_modal"))
     dt
   })
+  
+  #### Post Stats ####
+  comment_time <- reactive({
+    if (is.null(user_comments()) || !nrow(user_comments())) return(NA)
+    comment_time_chart(user_comments(), label = type)
+  })
+  
+  output$comm_time_plt <- highcharter::renderHighchart(comment_time())
   
   #### Comment Stats ####
   comm_score <- reactive({
@@ -58,11 +36,17 @@ comments_page_server <- function(input, output, session, reddit, rr) {
     user_comments()[, sum(downs)]
   })
   
-  comm_ratio <- reactive({
+  comm_up_perc <- reactive({
     if (is.null(user_comments()) || !nrow(user_comments())) return(NA_real_)
     comm_up_cnt() / (comm_up_cnt() + comm_down_cnt())
   })
-  output$comm_ratio <- renderText(scales::percent(comm_ratio()))
+  output$comm_up_perc <- renderText(scales::percent(comm_up_perc()))
+  
+  comm_ratio <- reactive({
+    if (is.null(user_comments()) || !nrow(user_comments())) return(NA_real_)
+    user_comments()[, mean(score)]
+  })
+  output$comm_ratio <- renderText(scales::number(comm_ratio(), accuracy = 0.1))
   
   comm_controversiality <- reactive({
     if (is.null(user_comments()) || !nrow(user_comments())) return(NA_real_)
@@ -73,7 +57,7 @@ comments_page_server <- function(input, output, session, reddit, rr) {
   #### Comments ####
   comm_words <- reactive({
     if (is.null(user_comments()) || !nrow(user_comments())) return(NULL)
-    get_comment_words(user_comments())
+    get_comment_words(user_comments(), text_col)
   })
   
   output$comm_word_cloud <- highcharter::renderHighchart({

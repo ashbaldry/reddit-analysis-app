@@ -14,7 +14,7 @@ user_home_server <- function(input, output, session) {
         href = paste0("https://www.reddit.com", post$permalink), target = "_blank",
         tags$video(
           controls = NA, class = "ui medium image",
-          tags$source(src = post$media$reddit_video$fallback_url, type = "video/mp4")
+          tags$source(src = post$secure_media$reddit_video$fallback_url, type = "video/mp4")
         )
       )
     } else {

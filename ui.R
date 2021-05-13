@@ -45,6 +45,10 @@ shiny.semantic::semanticPage(
               shiny.semantic::icon("blue arrow alternate circle up"), "Votes"
             ),
             a(
+              class = "signed-in-item item", `data-tab` = "posts", `data-value` = "posts", 
+              shiny.semantic::icon("blue edit"), "Posts"
+            ),
+            a(
               class = "signed-in-item item", `data-tab` = "comments", `data-value` = "comments", 
               shiny.semantic::icon("blue comment dots"), "Comments"
             ),
@@ -77,8 +81,12 @@ shiny.semantic::semanticPage(
       votes_page_ui("votes")
     ),
     div(
+      class = "ui tab basic segment", `data-tab` = "posts",
+      comments_page_ui("posts", type = "Post")
+    ),
+    div(
       class = "ui tab basic segment", `data-tab` = "comments",
-      comments_page_ui("comments")
+      comments_page_ui("comments", type = "Comment")
     ),
     div(
       class = "ui tab basic segment", `data-tab` = "subreddit",

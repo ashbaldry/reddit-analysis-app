@@ -65,5 +65,5 @@ body, .ui.tab.segment {
 }
 
 .centered-reddit-post {
-  text-align: center;
+  text-align: -webkit-center;
 }
