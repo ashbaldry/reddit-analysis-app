@@ -20,8 +20,8 @@ body, .ui.tab.segment {
     display: none;
   }
   
-  .ui.grid>.column.grey-sidebar {
-    display: none;
+  .ui.segment.reddit-segment {
+    padding: 0!important;
   }
 }
 

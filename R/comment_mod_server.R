@@ -5,9 +5,7 @@ comments_page_server <- function(input, output, session, reddit, rr, type = "Com
   user_comments <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    shiny.semantic::show_modal(ns("comments_modal"))
     dt <- reddit[[glue::glue("get_user_{tolower(type)}")]](max_posts = 1000)
-    shiny.semantic::hide_modal(ns("comments_modal"))
     dt
   })
   

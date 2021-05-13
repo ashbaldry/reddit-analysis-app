@@ -4,21 +4,6 @@ comments_page_ui <- function(id, type = "Comment") {
   div(
     class = "ui stackable grid padded-grid", id = ns("page_grid"),
     div(
-      class = "ui modal", id = ns("comments_modal"),
-      div(
-        class = "content", 
-        h4("Pulling posts and comments from Reddit..."),
-        div(class = "ui large active orange loader")
-      )
-    ),
-    tags$script(
-      glue::glue(
-        "Shiny.initSemanticModal('[ns('comments_modal')]');
-         $('#[ns('comments_modal')]').modal({context: '#[ns('page_grid')]', closable: false});",
-        .open = "[", .close = "]"
-      )
-    ),
-    div(
       class = "three column stretched row",
       div(
         class = "column",

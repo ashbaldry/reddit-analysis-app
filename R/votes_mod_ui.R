@@ -3,21 +3,6 @@ votes_page_ui <- function(id) {
   div(
     class = "ui stackable grid padded-grid", id = ns("page_grid"),
     div(
-      class = "ui top aligned modal", id = ns("vote_modal"),
-      h4(class = "ui header", "Pulling upvoted and downvoted posts from Reddit (this may take a while)..."),
-      div(
-        class = "content", 
-        div(class = "ui large inline centered active orange loader")
-      )
-    ),
-    tags$script(
-      glue::glue(
-        "Shiny.initSemanticModal('[ns('vote_modal')]');
-         $('#[ns('vote_modal')]').modal({context: 'main', closable: false});",
-        .open = "[", .close = "]"
-      )
-    ),
-    div(
       class = "row",
       div(
         class = "six wide column",
@@ -28,7 +13,7 @@ votes_page_ui <- function(id) {
         ),
         
         reddit_segment(
-          highcharter::highchartOutput(ns("vote_ratio_plt"), height = "590px")
+          highcharter::highchartOutput(ns("vote_ratio_plt"), height = "588px")
         )
       ),
       
