@@ -20,6 +20,65 @@ votes_chart <- function(dt, color = "#333333", label = "Upvotes") {
     )
 }
 
+vote_agree_data <- function(up_dt, down_dt) {
+  if (is.null(up_dt) || is.null(down_dt)) return(highcharter::highchart())
+  up_cnt_dt <- up_dt[, .(
+    subreddit = subreddit_name_prefixed, permalink, type = "Upvote", agree_ratio = upvote_ratio
+  )]
+  setorder(up_cnt_dt, -agree_ratio)
+  
+  down_cnt_dt <- down_dt[, .(
+    subreddit = subreddit_name_prefixed, permalink, type = "Downvote", agree_ratio = 1 - upvote_ratio
+  )]
+  setorder(down_cnt_dt, -agree_ratio)
+  
+  rbindlist(list(up_cnt_dt, down_cnt_dt))
+}
+  
+vote_agree_chart <- function(dt) {
+  labels <- c(
+    "",
+    glue::glue("Upvote<br/>Average:{dt[type == 'Upvote', scales::percent(mean(agree_ratio))]}"),
+    glue::glue("Downvote<br/>Average:{dt[type == 'Downvote', scales::percent(mean(agree_ratio))]}")
+  )
+  
+  highcharter::highchart() %>%
+    highcharter::hc_add_series(
+      dt, 
+      highcharter::hcaes(x = agree_ratio * 100, y = fifelse(type == "Downvote", 1, 2), group = type),
+      type = "scatter", cursor = "pointer",
+      tooltip = list(
+        headerFormat = "",
+        pointFormat = paste0(
+          "<span style='color:{point.color}'>●</span> <span> {point.subreddit}</span><br/>",
+          "Agreement: <b>{point.x:.0f}%</b><br/>Click to see Reddit post"
+        ),
+        valueDecimals = 1,
+        valueSuffix = "%"
+      ),
+      jitter = list(x = 0.5, y = 0.4)
+    ) %>%
+    highcharter::hc_yAxis(
+      type = "category", categories = labels,
+      labels = list(style = list(fontSize = "14px"), useHTML = TRUE)
+    ) %>%
+    highcharter::hc_xAxis(
+      min = -2, max = 102, label = list(format = "{value}%")
+    ) %>%
+    highcharter::hc_title(
+      text = "Upvote/Downvote Agreement"
+    ) %>%
+    highcharter::hc_legend(
+      enabled = FALSE
+    ) %>%
+    highcharter::hc_plotOptions(
+      series = list(point = list(events = list(click = htmlwidgets::JS(
+      "function() { window.open('https://www.reddit.com' + this.permalink); }"
+      ))))
+    ) %>%
+    highcharter::hc_colors(c(downvote_colour, upvote_colour))
+}
+
 vote_ratio_chart <- function(up_dt, down_dt) {
   if (is.null(up_dt) || is.null(down_dt)) return(highcharter::highchart())
   up_cnt_dt <- up_dt[, .(upvote = .N), by = .(subreddit = subreddit_name_prefixed)]

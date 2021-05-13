@@ -2,7 +2,7 @@ get_user_activity <- function(user_name, access_token, api_call = "comments", ma
   res <- httr::GET(
     glue::glue("https://oauth.reddit.com/user/{user_name}/{api_call}"),
     httr::add_headers(Authorization = access_token),
-    httr::user_agent("httr")
+    httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)")
   )
   
   httr::stop_for_status(res)
@@ -34,7 +34,7 @@ get_user_activity <- function(user_name, access_token, api_call = "comments", ma
     res <- httr::GET(
       glue::glue("https://oauth.reddit.com/user/{user_name}/{api_call}"),
       httr::add_headers(Authorization = access_token),
-      httr::user_agent("httr"),
+      httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)"),
       query = list(after = cont$data$after, count = count)
     )
     

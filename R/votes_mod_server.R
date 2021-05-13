@@ -16,6 +16,19 @@ votes_page_server <- function(input, output, session, reddit, rr) {
     dt
   })
   
+  observeEvent(user_downvotes(), {
+    if (!reddit$is_authorized()) {
+      shiny.semantic::update_dropdown_input(session, "agree_sr", "All", value = "All")      
+    } else {
+      dt <- rbindlist(list(user_upvotes()[, .(subreddit_name_prefixed)], user_downvotes()[, .(subreddit_name_prefixed)] ))
+      shiny.semantic::update_dropdown_input(
+        session, "agree_sr", 
+        choices = dt[, .N, by = .(subreddit_name_prefixed)][order(-N), c("All", subreddit_name_prefixed)],
+        value = "All"
+      )
+    }
+  })
+  
   output$upvote_plt <- highcharter::renderHighchart({
     votes_chart(user_upvotes(), color = "#FF8B60", label = "Upvotes")
   })
@@ -30,5 +43,13 @@ votes_page_server <- function(input, output, session, reddit, rr) {
   
   output$vote_time_plt <- highcharter::renderHighchart({
     vote_time_chart(user_upvotes(), user_downvotes())
+  })
+  
+  vote_agree_rdt <- reactive(vote_agree_data(user_upvotes(), user_downvotes()))
+  
+  output$vote_agree_plt <- highcharter::renderHighchart({
+    dt <- vote_agree_rdt()
+    if (input$agree_sr != "All") dt <- dt[subreddit == input$agree_sr]
+    vote_agree_chart(dt)
   })
 }

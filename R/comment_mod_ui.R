@@ -35,7 +35,7 @@ comments_page_ui <- function(id, type = "Comment") {
               div(id = ns("comm_ratio"), class = "shiny-text-output value"),
               div(class = "label", glue::glue("Upvote to {type} Ratio"))
             ),
-            if (type = "Comment") {
+            if (type == "Comment") {
               div(
                 class = "statistic",
                 div(id = ns("comm_contro"), class = "shiny-text-output value"),

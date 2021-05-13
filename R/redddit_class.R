@@ -59,7 +59,7 @@ Reddit <- R6::R6Class(
       res <- httr::GET(
         "https://oauth.reddit.com/api/v1/me",
         httr::add_headers(Authorization = private$access_token),
-        httr::user_agent("httr")
+        httr::user_agent("shiny:ashbaldry.shinyapps.io:v1.0.0 (by /u/AshenCoder)")
       )
       
       httr::content(res)
