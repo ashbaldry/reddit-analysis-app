@@ -18,7 +18,7 @@ comments_page_ui <- function(id, type = "Comment") {
             div(
               class = "statistic",
               div(id = ns("comm_ratio"), class = "shiny-text-output value"),
-              div(class = "label", glue::glue("Upvote to {type} Ratio"))
+              div(class = "label", glue::glue("Score Per {type}"))
             ),
             if (type == "Comment") {
               div(
@@ -55,7 +55,14 @@ comments_page_ui <- function(id, type = "Comment") {
       
       div(
         class = "column",
-        reddit_segment(NULL)
+        reddit_segment(
+          div(
+            class = "ui right corner label info-popup",
+            `data-content` = "Karma based on time of posting rather than when voted on",
+            shiny.semantic::icon(class = "question mark")
+          ),
+          highcharter::highchartOutput(ns("karma_time_plt"), height = "350px")
+        )
       )
     )
   )
