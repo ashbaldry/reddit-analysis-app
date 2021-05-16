@@ -6,6 +6,11 @@ library(data.table)
 library(quanteda)
 library(magrittr)
 library(httr)
+library(promises)
+library(future)
+
+#### Multi-Session ####
+plan(multisession)
 
 #### Sourcing Scripts ####
 lapply(list.files("R", full.names = TRUE), source, echo = FALSE)

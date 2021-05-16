@@ -23,7 +23,7 @@ get_user_activity <- function(user_name, access_token, api_call = "comments", ma
     y$created <- as.POSIXct(y$created, origin = "1970-01-01", tz = "UTC")
     y$created_utc <- as.POSIXct(y$created_utc, origin = "1970-01-01", tz = "UTC")
     
-    as.data.table(y)
+    data.table::as.data.table(y)
   }
   
   cont <- httr::content(res)
@@ -45,7 +45,7 @@ get_user_activity <- function(user_name, access_token, api_call = "comments", ma
     count <- length(out_lst)
   }
   
-  rbindlist(out_lst, use.names = TRUE, fill = TRUE)
+  data.table::rbindlist(out_lst, use.names = TRUE, fill = TRUE)
 }
 
 get_subreddit_karma <- function(access_token) {
@@ -57,7 +57,7 @@ get_subreddit_karma <- function(access_token) {
   
   httr::stop_for_status(res)
   
-  rbindlist(httr::content(res)$data, use.names = TRUE, fill = TRUE)
+  data.table::rbindlist(httr::content(res)$data, use.names = TRUE, fill = TRUE)
 }
 
 get_subscribed_subreddits <- function(access_token) {
@@ -87,7 +87,7 @@ get_subscribed_subreddits <- function(access_token) {
     y$created <- as.POSIXct(y$created, origin = "1970-01-01", tz = "UTC")
     y$created_utc <- as.POSIXct(y$created_utc, origin = "1970-01-01", tz = "UTC")
     
-    as.data.table(y)
+    data.table::as.data.table(y)
   }
   
   cont <- httr::content(res)
@@ -109,5 +109,5 @@ get_subscribed_subreddits <- function(access_token) {
     count <- length(out_lst)
   }
   
-  rbindlist(out_lst, use.names = TRUE, fill = TRUE)
+  data.table::rbindlist(out_lst, use.names = TRUE, fill = TRUE)
 }
