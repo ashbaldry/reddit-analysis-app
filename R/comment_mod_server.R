@@ -2,11 +2,16 @@ comments_page_server <- function(input, output, session, reddit, rr, type = "Com
   ns <- session$ns
   
   #### Data Pull ####
+  user_info <- reactive({
+    rr()
+    if (!reddit$is_authorized()) return(NULL)
+    reddit$get_user_info()
+  })
+  
   user_comments <- reactive({
     rr()
     if (!reddit$is_authorized()) return(NULL)
-    dt <- reddit[[glue::glue("get_user_{tolower(type)}")]](max_posts = 1000)
-    dt
+    reddit[[glue::glue("get_user_{tolower(type)}")]](max_posts = 1000)
   })
   
   #### Post Stats ####
@@ -16,6 +21,17 @@ comments_page_server <- function(input, output, session, reddit, rr, type = "Com
   })
   
   output$comm_time_plt <- highcharter::renderHighchart(comment_time())
+  
+  karma_time <- reactive({
+    if (is.null(user_comments()) || !nrow(user_comments())) return(NA)
+    comment_karma_tl(
+      user_comments(), 
+      label = type,
+      cake_day = as.Date(as.POSIXct(user_info()$created_utc, origin = "1970-01-01", tz = "UTC"))
+    )
+  })
+  
+  output$karma_time_plt <- highcharter::renderHighchart(karma_time())
   
   #### Comment Stats ####
   comm_score <- reactive({
@@ -59,6 +75,6 @@ comments_page_server <- function(input, output, session, reddit, rr, type = "Com
   })
   
   output$comm_word_cloud <- highcharter::renderHighchart({
-    word_freq_cloud(comm_words())
+    word_freq_cloud(comm_words(), label = type)
   })
 }
