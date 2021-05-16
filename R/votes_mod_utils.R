@@ -76,7 +76,9 @@ vote_agree_chart <- function(dt) {
       "function() { window.open('https://www.reddit.com' + this.permalink); }"
       ))))
     ) %>%
-    highcharter::hc_colors(c(downvote_colour, upvote_colour))
+    highcharter::hc_colors(
+      c(if (any(dt$type == "Downvote")) downvote_colour, if (any(dt$type == "Upvote")) upvote_colour)
+    )
 }
 
 vote_ratio_chart <- function(up_dt, down_dt, n = 20) {
