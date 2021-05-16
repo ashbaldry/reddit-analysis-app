@@ -18,7 +18,7 @@ votes_page_server <- function(input, output, session, reddit, rr) {
     if (!reddit$is_authorized()) {
       shiny.semantic::update_dropdown_input(session, "agree_sr", "All", value = "All")      
     } else {
-      dt <- rbindlist(list(user_upvotes()[, .(subreddit_name_prefixed)], user_downvotes()[, .(subreddit_name_prefixed)] ))
+      dt <- rbindlist(list(user_upvotes()[, .(subreddit_name_prefixed)], user_downvotes()[, .(subreddit_name_prefixed)]))
       shiny.semantic::update_dropdown_input(
         session, "agree_sr", 
         choices = dt[, .N, by = .(subreddit_name_prefixed)][order(-N), c("All", subreddit_name_prefixed)],

@@ -18,6 +18,8 @@ $(document).on('shiny:connected', function(event) {
   Shiny.initSemanticModal('load_modal'); 
   $('#load_modal').modal({ closable: false });
   
+  $('.info-popup').popup();
+  
   $('.subreddit-search-dd').dropdown('setting', 'ignoreDiacritics', true);
   $('.subreddit-search-dd').dropdown('setting', 'fullTextSearch', 'exact');
 });

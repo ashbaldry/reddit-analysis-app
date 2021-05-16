@@ -8,7 +8,7 @@ votes_page_ui <- function(id) {
         class = "six wide column",
         reddit_segment(
           h2("Information"),
-          p("The last 1,000 upvotes and 1,000 downvotes have been pulled from Reddit to determine where you vote the most."),
+          p("The last 1,000 upvotes and 1,000 downvotes have been pulled from Reddit to determine where and how you vote the most."),
           p()
         ),
         
@@ -43,12 +43,18 @@ votes_page_ui <- function(id) {
                 class = "column",
                 reddit_segment(
                   div(
+                    class = "ui right corner label info-popup",
+                    shiny.semantic::icon(class = "question mark"),
+                    `data-content` = "Looking at the percentage of redditors that also upvoted/downvoted a post you voted on"
+                  ),
+                  
+                  div(
                     class = "ui form",
                     tags$label("Subreddit:"),
                     shiny.semantic::dropdown_input(
                       ns("agree_sr"), "All", value = "All",
                       type = "inline search selection subreddit-search-dd"
-                    ),
+                    )
                   ),
                   highcharter::highchartOutput(ns("vote_agree_plt"), height = "300px")
                 )
