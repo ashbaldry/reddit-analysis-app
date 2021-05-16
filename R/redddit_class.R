@@ -52,9 +52,8 @@ Reddit <- R6::R6Class(
     },
     
     get_user_info = function() {
-      if (is.null(private$access_token)) {
-        stop("Unable to find access code")  
-      }
+      if (is.null(private$access_token)) stop("Unable to find access code")  
+      if (!is.null(self$user_info)) return(self$user_info)
       
       res <- httr::GET(
         "https://oauth.reddit.com/api/v1/me",
@@ -62,11 +61,12 @@ Reddit <- R6::R6Class(
         httr::user_agent(glue::glue("shiny:ashbaldry.shinyapps.io:v1.0.0 {Sys.time()} (by /u/AshenCoder)"))
       )
       
-      httr::content(res)
+      self$user_info <- httr::content(res)
+      self$user_info
     },
     
     get_user_comments = function(user_name = self$user_name, max_posts = 1000) {
-      if (is.null(user_name)) return(NULL)
+      if (is.null(private$access_token)) stop("Unable to find access code")  
       if (user_name == self$user_name && !is.null(self$user_comments)) return(self$user_comments)
       
       comments <- get_user_activity(
@@ -77,7 +77,7 @@ Reddit <- R6::R6Class(
     },
     
     get_user_posts = function(user_name = self$user_name, max_posts = 1000) {
-      if (is.null(user_name)) return(NULL)
+      if (is.null(private$access_token)) stop("Unable to find access code")  
       if (user_name == self$user_name && !is.null(self$user_posts)) return(self$user_posts)
       
       posts <- get_user_activity(
@@ -88,6 +88,7 @@ Reddit <- R6::R6Class(
     },
     
     get_subscribed_subreddits = function() {
+      if (is.null(private$access_token)) stop("Unable to find access code")  
       if (!is.null(self$user_subreddit_karma)) return(self$user_subreddits)
       
       self$user_subreddits <- get_subscribed_subreddits(access_token = private$access_token)
@@ -95,6 +96,7 @@ Reddit <- R6::R6Class(
     },
     
     get_subreddit_karma = function() {
+      if (is.null(private$access_token)) stop("Unable to find access code")  
       if (!is.null(self$user_subreddit_karma)) return(self$user_subreddit_karma)
       
       self$user_subreddit_karma <- get_subreddit_karma(access_token = private$access_token)
@@ -102,7 +104,7 @@ Reddit <- R6::R6Class(
     },
     
     get_user_upvotes = function(user_name = self$user_name, max_posts = 1000) {
-      if (is.null(user_name)) return(NULL)
+      if (is.null(private$access_token)) stop("Unable to find access code")  
       if (user_name == self$user_name && !is.null(self$user_upvotes)) return(self$user_upvotes)
       
       comments <- get_user_activity(
@@ -113,7 +115,7 @@ Reddit <- R6::R6Class(
     },
     
     get_user_downvotes = function(user_name = self$user_name, max_posts = 1000) {
-      if (is.null(user_name)) return(NULL)
+      if (is.null(private$access_token)) stop("Unable to find access code")  
       if (user_name == self$user_name && !is.null(self$user_downvotes)) return(self$user_downvotes)
       
       comments <- get_user_activity(
