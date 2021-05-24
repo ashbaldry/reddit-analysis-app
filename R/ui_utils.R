@@ -68,10 +68,10 @@ signed_in_dropdown <- function(reddit) {
           class = "mobile-item item", `data-tab` = "comments", `data-value` = "comments", 
           shiny.semantic::icon("comment dots"), "Comments"
         ),
-        a(
-          class = "mobile-item item", `data-tab` = "subreddit", `data-value` = "subreddit", 
-          shiny.semantic::icon("list"), "Subreddit"
-        ),
+        # a(
+        #   class = "mobile-item item", `data-tab` = "subreddit", `data-value` = "subreddit", 
+        #   shiny.semantic::icon("list"), "Subreddit"
+        # ),
         shiny.semantic::menu_divider(class = "mobile-item"),
         shiny.semantic::menu_item(
           shiny.semantic::icon("external alternate"), "Visit Reddit",
