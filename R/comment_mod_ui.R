@@ -18,7 +18,7 @@ comments_page_ui <- function(id, type = "Comment") {
             div(
               class = "statistic",
               div(id = ns("comm_ratio"), class = "shiny-text-output value"),
-              div(class = "label", glue::glue("Score Per {type}"))
+              div(class = "label", glue::glue("Karma Per {type}"))
             ),
             if (type == "Comment") {
               div(
@@ -40,7 +40,61 @@ comments_page_ui <- function(id, type = "Comment") {
       
       div(
         class = "column",
-        reddit_segment(NULL)
+        reddit_segment(
+            class = "top-low-comment",
+            div(
+              class = "ui orange message",
+              div(
+                class = "content",
+                div(
+                  class = "item",
+                  div(
+                    class = "content",
+                    div(class = "header", glue::glue("Top {type}")),
+                    div(
+                      class = "meta",
+                      textOutput(ns("comm_top_subreddit"), inline = TRUE)
+                    ),
+                    div(class = "description", textOutput(ns("comm_top_title"), tags$p)),
+                    div(
+                      class = "extra",
+                      textOutput(ns("comm_top_time"), inline = TRUE),
+                      " - ",
+                      textOutput(ns("comm_top_karma"), inline = TRUE),
+                      "karma - ",
+                      uiOutput(ns("comm_top_link"), inline = TRUE)
+                    )
+                  )
+                )
+              )
+            ),
+            div(
+              class = "ui blue message",
+              div(
+                class = "content",
+                div(
+                  class = "item",
+                  div(
+                    class = "content",
+                    div(class = "header", glue::glue("Worst {type}")),
+                    div(
+                      class = "meta",
+                      textOutput(ns("comm_low_subreddit"), inline = TRUE)
+                    ),
+                    div(class = "description", textOutput(ns("comm_low_title"), tags$p)),
+                    div(
+                      class = "extra",
+                      textOutput(ns("comm_low_time"), inline = TRUE), 
+                      " - ",
+                      textOutput(ns("comm_low_karma"), inline = TRUE),
+                      "karma - ",
+                      uiOutput(ns("comm_low_link"), inline = TRUE)
+                    )
+                  )
+                )
+              )
+            )
+          )
       )
     ),
     
