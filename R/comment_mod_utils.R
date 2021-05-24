@@ -42,7 +42,7 @@ comment_karma_tl <- function(dt, label = "Posts", cake_day = NULL) {
     keyby = .(date = as.Date(created_utc))
   ]
   
-  if (!is.null(cake_day)) {
+  if (!is.null(cake_day) && !cake_day %in% date_dt$date) {
     date_dt <- rbindlist(list(
       data.table(
         date = cake_day, score = 0, max_score = 0, posts = 0, 
@@ -77,6 +77,7 @@ comment_karma_tl <- function(dt, label = "Posts", cake_day = NULL) {
     highcharter::hc_yAxis(
       title = list(text = paste(s_label, "Karma"))
     )  %>%
+    highcharter::hc_colors(upvote_colour) %>%
     highcharter::hc_title(
       text = paste("Karma Gained from", label, "Over Time")
     ) %>%

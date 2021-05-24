@@ -29,6 +29,11 @@ body, .ui.tab.segment {
   .ui.dropdown#user_menu>.menu>.mobile-item {
     display: none;
   }
+  
+  .reddit-content.top-low-comment {
+    max-height: 370px;
+    overflow-y: scroll;
+  }
 }
 
 .login-icon-header {
@@ -74,4 +79,14 @@ body, .ui.tab.segment {
 
 .centered-reddit-post {
   text-align: -webkit-center;
+}
+
+.reddit-content.top-low-comment {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.top-low-comment>.ui.message>.content .meta, .top-low-comment>.ui.message>.content .extra {
+  font-size: 0.85em;
 }
