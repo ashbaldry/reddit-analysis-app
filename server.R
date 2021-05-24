@@ -3,7 +3,7 @@ function(input, output, session) {
   reddit <- Reddit$new(client_id, client_secret, redirect_uri)
   rr <- reactive(reddit$get_reactive())
   
-  observeEvent(rr(), if (reddit$is_authorized()) shiny.semantic::show_modal("load_modal"), priority = 100)
+  # Data load
   observeEvent(rr(), {
     if (reddit$is_authorized()) {
       promises::promise_all(

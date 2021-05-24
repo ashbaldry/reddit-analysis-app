@@ -21,7 +21,7 @@ shiny.semantic::semanticPage(
       class = "top attached borderless",
       menu_item(
         href = "https://www.reddit.com", target = "_blank",
-        div(class = "ui tiny image", tags$img(src = "reddit_logo.png"))
+        div(class = "ui tiny image", tags$img(src = "reddit_logo.png"), alt = "Reddit logo")
       ),
       
       div(

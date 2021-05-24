@@ -32,7 +32,9 @@ user_home_ui <- function(id) {
             div(
               h2("Hot Post on r/aww:"),
               textOutput(ns("title"), h4),
-              uiOutput(ns("post"), class = "centered-reddit-post")
+              uiOutput(ns("post"), class = "centered-reddit-post"),
+              tags$br(),
+              uiOutput(ns("link"))
             )
           )
         )
