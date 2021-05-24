@@ -10,7 +10,7 @@ user_page_ui <- function(id) {
       div(
         class = "column",
         div(
-          class = "ui centered card",
+          class = "ui horizontal fluid card",
           uiOutput(class = "image", ns("user_icon")),
           div(
             class = "content",

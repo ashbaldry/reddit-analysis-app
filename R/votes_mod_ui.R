@@ -49,11 +49,10 @@ votes_page_ui <- function(id) {
                   ),
                   
                   div(
-                    class = "ui form",
                     tags$label("Subreddit:"),
                     shiny.semantic::dropdown_input(
                       ns("agree_sr"), "All", value = "All",
-                      type = "inline search selection subreddit-search-dd"
+                      type = "search selection subreddit-search-dd"
                     )
                   ),
                   highcharter::highchartOutput(ns("vote_agree_plt"), height = "300px")

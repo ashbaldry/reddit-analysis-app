@@ -9,19 +9,23 @@ user_home_server <- function(input, output, session) {
   
   output$title <- renderText(post$title)
   output$post <- renderUI({
-    if (post$is_video) {
-      tags$a(
-        href = paste0("https://www.reddit.com", post$permalink), target = "_blank",
+      if (post$is_video) {
         tags$video(
           controls = NA, class = "ui medium image",
           tags$source(src = post$secure_media$reddit_video$fallback_url, type = "video/mp4")
         )
-      )
-    } else {
-      tags$a(
-        href = paste0("https://www.reddit.com", post$permalink), target = "_blank",
+      } else {
         tags$img(class = "ui medium image", src = post$url)
-      )
-    }
+      }
+  })
+  
+  output$link <- renderUI({
+    tagList(
+      scales::comma(post$score),
+      "karma - ",
+    tags$a(
+      href = paste0("https://www.reddit.com", post$permalink), target = "_blank", "Link"
+    )
+  )
   })
 }

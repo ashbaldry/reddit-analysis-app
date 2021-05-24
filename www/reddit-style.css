@@ -58,7 +58,8 @@ body, .ui.tab.segment {
 }
 
 .ui.card .banner-karma-icon {
-  margin-left: 2px;
+  margin-left: 4px;
+  margin-right: 6px;
 }
 
 .ui.grid.padded-grid {
