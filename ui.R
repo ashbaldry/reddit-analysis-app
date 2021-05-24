@@ -73,7 +73,7 @@ shiny.semantic::semanticPage(
       h4(class = "ui header", "Pulling user activity from Reddit (this may take a while)..."),
       div(
         class = "content", 
-        div(class = "ui large inline centered active orange loader")
+        shiny.semantic::progress("load_progress", value = 0, total = 6, label_complete = "Complete!", class = "indicating")
       )
     ),
     div(
