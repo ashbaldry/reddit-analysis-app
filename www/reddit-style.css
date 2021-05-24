@@ -32,7 +32,12 @@ body, .ui.tab.segment {
   
   .reddit-content.top-low-comment {
     max-height: 370px;
-    overflow-y: scroll;
+    overflow-y: auto;
+  }
+  
+  .reddit-content.top-low-comment .content .description{
+    max-height: 120px;
+    overflow-y: auto;
   }
 }
 

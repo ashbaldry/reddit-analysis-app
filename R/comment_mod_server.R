@@ -76,7 +76,7 @@ comments_page_server <- function(input, output, session, reddit, rr, type = "Com
   
   comm_top_title <- reactive({
     if (!inherits(comm_top_comment(), "data.table")) comm_top_comment()
-    comm_top_comment()$title
+    if (type == "Posts") comm_top_comment()$title else comm_top_comment()$body
   })
   output$comm_top_title <- renderText(comm_top_title())
 
@@ -115,7 +115,7 @@ comments_page_server <- function(input, output, session, reddit, rr, type = "Com
   
   comm_low_title <- reactive({
     if (!inherits(comm_low_comment(), "data.table")) comm_low_comment()
-    comm_low_comment()$title
+    if (type == "Posts") comm_low_comment()$title else comm_low_comment()$body
   })
   output$comm_low_title <- renderText(comm_low_title())
   
