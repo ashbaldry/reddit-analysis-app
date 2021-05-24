@@ -6,14 +6,34 @@ function(input, output, session) {
   # Data load
   observeEvent(rr(), {
     if (reddit$is_authorized()) {
-      promises::promise_all(
-        promises::future_promise(reddit$get_user_info()),
-        promises::future_promise(reddit$get_user_upvotes()),
-        promises::future_promise(reddit$get_user_downvotes()),
-        promises::future_promise(reddit$get_user_posts()),
-        promises::future_promise(reddit$get_user_comments())
-      ) %>%
-        promises::then(function(lst) shiny.semantic::hide_modal("load_modal"))
+      if ("promises" %in% names(sessionInfo()$otherPkgs)) {
+        promises::promise_all(
+          promises::future_promise(reddit$get_user_info()),
+          promises::future_promise(reddit$get_user_upvotes()),
+          promises::future_promise(reddit$get_user_downvotes()),
+          promises::future_promise(reddit$get_user_posts()),
+          promises::future_promise(reddit$get_user_comments())
+        ) %>%
+          promises::then(function(lst) shiny.semantic::hide_modal("load_modal"))
+      } else {
+        shiny.semantic::update_progress(session, "load_progress", "increment")
+        shiny.semantic::update_progress(session, "load_progress", "label", "Extracting User Infomation")
+        reddit$get_user_info()
+        shiny.semantic::update_progress(session, "load_progress", "increment")
+        shiny.semantic::update_progress(session, "load_progress", "label", "Extracting User Upvotes")
+        reddit$get_user_upvotes()
+        shiny.semantic::update_progress(session, "load_progress", "increment")
+        shiny.semantic::update_progress(session, "load_progress", "label", "Extracting User Downvotes")
+        reddit$get_user_downvotes()
+        shiny.semantic::update_progress(session, "load_progress", "increment")
+        shiny.semantic::update_progress(session, "load_progress", "label", "Extracting Posts Made")
+        reddit$get_user_posts()
+        shiny.semantic::update_progress(session, "load_progress", "increment")
+        shiny.semantic::update_progress(session, "load_progress", "label", "Extracting Comments Posted")
+        reddit$get_user_comments()
+        shiny.semantic::update_progress(session, "load_progress", "increment")
+        shiny.semantic::hide_modal("load_modal")
+      }
     }
   }, priority = 50)
   
