@@ -8,8 +8,9 @@ votes_page_ui <- function(id) {
         class = "six wide column",
         reddit_segment(
           h2("Information"),
-          p("The last 1,000 upvotes and 1,000 downvotes have been pulled from Reddit to determine where and how you vote the most."),
-          p()
+          p("The last 1,000 upvotes and 1,000 downvotes have been pulled from Reddit to determine where and how you 
+            vote the most."),
+          p("Votes are only based on posts, comment ratings are currently unavailable.")
         ),
         
         reddit_segment(
@@ -26,13 +27,13 @@ votes_page_ui <- function(id) {
             div(
               class = "column",
               reddit_segment(
-                highcharter::highchartOutput(ns("upvote_plt"), height = "330px")
+                highcharter::highchartOutput(ns("upvote_plt"), height = "335px")
               )
             ),
             div(
               class = "column",
               reddit_segment(
-                highcharter::highchartOutput(ns("downvote_plt"), height = "330px")
+                highcharter::highchartOutput(ns("downvote_plt"), height = "335px")
               )
             )
             ),
@@ -55,7 +56,7 @@ votes_page_ui <- function(id) {
                       type = "search selection subreddit-search-dd"
                     )
                   ),
-                  highcharter::highchartOutput(ns("vote_agree_plt"), height = "300px")
+                  highcharter::highchartOutput(ns("vote_agree_plt"), height = "340px")
                 )
               )
             )

@@ -1,5 +1,5 @@
 shiny.semantic::semanticPage(
-  title = "Reddit Analysis", 
+  title = "Reddit Profile Analyzer", 
   margin = 0,
   
   #### Settings ####
@@ -21,7 +21,7 @@ shiny.semantic::semanticPage(
       class = "top attached borderless",
       menu_item(
         href = "https://www.reddit.com", target = "_blank",
-        div(class = "ui tiny image", tags$img(src = "reddit_logo.png"), alt = "Reddit logo")
+        div(id = "reddit_logo", class = "ui tiny image", tags$img(src = "reddit_logo.png"), alt = "Reddit logo")
       ),
       
       div(
@@ -73,7 +73,13 @@ shiny.semantic::semanticPage(
       h4(class = "ui header", "Pulling user activity from Reddit (this may take a while)..."),
       div(
         class = "content", 
-        shiny.semantic::progress("load_progress", value = 0, total = 6, label_complete = "Complete!", class = "indicating")
+        shiny.semantic::progress(
+          "load_progress", 
+          value = 0, 
+          total = 6, 
+          label_complete = "Complete!", 
+          class = "indicating"
+        )
       )
     ),
     div(

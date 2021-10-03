@@ -14,7 +14,6 @@ $(document).on('shiny:connected', function(event) {
     Shiny.initSemanticModal('load_modal'); 
     $('#load_modal').modal({ closable: false });
     $('#load_modal').modal('show');
-  
   } else {
     $('#page_select .signed-in-item').hide();
     $('.login-prompt').show();

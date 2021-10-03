@@ -12,9 +12,6 @@ library(httr)
 #### Multi-Session ####
 # plan(multisession)
 
-#### Sourcing Scripts ####
-lapply(list.files("R", full.names = TRUE), source, echo = FALSE)
-
 #### Reddit Authentication ####
 # RStudio Cloud or local
 if (!interactive()) {
@@ -26,9 +23,6 @@ if (!interactive()) {
   client_secret <- Sys.getenv("local_client_secret")
   redirect_uri <- "http://127.0.0.1:8100"
 }
-
-upvote_colour <- "#FF8B60"
-downvote_colour <- "#9494FF"
 
 #### Highcharts ####
 hc_opts <- getOption("highcharter.chart")
