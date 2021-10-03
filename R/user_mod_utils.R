@@ -9,7 +9,7 @@ karma_subreddit_chart <- function(subreddit_karma, yaxis_col = c("link_karma", "
       type = "treemap",
       layoutAlgortithm = "squarified",
       tooltip = list(
-        pointFormat = "<b>{point.name}</b>: {point.value}<br/>{point.percent} of total karma<br/>"
+        pointFormat = "<b>{point.name}</b><br/>{point.value} karma<br/>{point.percent} of total<br/>"
       )
     ) %>%
     highcharter::hc_colorAxis(

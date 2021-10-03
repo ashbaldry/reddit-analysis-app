@@ -28,33 +28,33 @@ shiny.semantic::semanticPage(
         class = "item",
         div(
           class = "ui selection dropdown", id = "page_select",
-          div(class = "text", shiny.semantic::icon("blue home"), "Home"), 
+          div(class = "text", shiny.semantic::icon("home"), "Home"), 
           tags$i(class = "dropdown icon"),
           div(
             class = "menu",
             a(
               class = "active item", `data-tab` = "home", `data-value` = "home", 
-              shiny.semantic::icon("blue home"), "Home"
+              shiny.semantic::icon("home"), "Home"
             ),
             a(
               class = "signed-in-item item", `data-tab` = "user", `data-value` = "user", 
-              shiny.semantic::icon("blue reddit alien"), "User"
+              shiny.semantic::icon("reddit alien"), "User"
             ),
             a(
               class = "signed-in-item item", `data-tab` = "votes", `data-value` = "votes", 
-              shiny.semantic::icon("blue arrow alternate circle up"), "Votes"
+              shiny.semantic::icon("arrow alternate circle up"), "Votes"
             ),
             a(
               class = "signed-in-item item", `data-tab` = "posts", `data-value` = "posts", 
-              shiny.semantic::icon("blue edit"), "Posts"
+              shiny.semantic::icon("edit"), "Posts"
             ),
             a(
               class = "signed-in-item item", `data-tab` = "comments", `data-value` = "comments", 
-              shiny.semantic::icon("blue comment dots"), "Comments"
+              shiny.semantic::icon("comment dots"), "Comments"
             ),
             a(
               class = "item", `data-tab` = "about", `data-value` = "about", 
-              shiny.semantic::icon("blue question mark"), "About"
+              shiny.semantic::icon("question mark"), "About"
             )
           )
         )
