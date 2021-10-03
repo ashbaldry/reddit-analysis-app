@@ -7,7 +7,7 @@ h1, h2, h3, h4, .ui.header {
 }
 
 body, .ui.tab.segment {
-  background-color: #EFF7FF;
+  background-color: #DAE0E6;
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -39,6 +39,10 @@ body, .ui.tab.segment {
     max-height: 120px;
     overflow-y: auto;
   }
+}
+
+#reddit_logo {
+  width: 115px;
 }
 
 .login-icon-header {

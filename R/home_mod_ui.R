@@ -11,7 +11,7 @@ user_home_ui <- function(id) {
         div(
           class = "column",
           reddit_segment(
-            h2("Welcome!"),
+            h2("Reddit Profile Analyzer"),
             p("This aim of the app is to provide some insight to your behaviour on the Reddit site. It looks at upvote
               and downvote history, as well as submissions and comments made."),
             span(
