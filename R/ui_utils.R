@@ -49,29 +49,35 @@ signed_in_dropdown <- function(reddit) {
       shiny.semantic::menu(
         class = "fluid",
         a(
-          class = "mobile-item item", `data-tab` = "home", `data-value` = "home", 
+          class = "mobile-item tab-item item", 
+          `data-tab` = "home", `data-value` = "home", 
           shiny.semantic::icon("home"), "Home"
         ),
         a(
-          class = "mobile-item active item", `data-tab` = "user", `data-value` = "user", 
+          class = "mobile-item tab-item active item", 
+          `data-tab` = "user", `data-value` = "user", 
           shiny.semantic::icon("reddit alien"), "User"
         ),
         a(
-          class = "mobile-item item", `data-tab` = "votes", `data-value` = "votes", 
+          class = "mobile-item tab-item item", 
+          `data-tab` = "votes", `data-value` = "votes", 
           shiny.semantic::icon("arrow alternate circle up"), "Votes"
         ),
         a(
-          class = "mobile-item item", `data-tab` = "posts", `data-value` = "posts", 
+          class = "mobile-item tab-item item", 
+          `data-tab` = "posts", `data-value` = "posts", 
           shiny.semantic::icon("edit"), "Posts"
         ),
         a(
-          class = "mobile-item item", `data-tab` = "comments", `data-value` = "comments", 
+          class = "mobile-item tab-item item", 
+          `data-tab` = "comments", `data-value` = "comments", 
           shiny.semantic::icon("comment dots"), "Comments"
         ),
-        # a(
-        #   class = "mobile-item item", `data-tab` = "subreddit", `data-value` = "subreddit", 
-        #   shiny.semantic::icon("list"), "Subreddit"
-        # ),
+        a(
+          class = "mobile-item tab-item item", 
+          `data-tab` = "about", `data-value` = "about", 
+          shiny.semantic::icon("question mark"), "About"
+        ),
         shiny.semantic::menu_divider(class = "mobile-item"),
         shiny.semantic::menu_item(
           shiny.semantic::icon("external alternate"), "Visit Reddit",
@@ -117,7 +123,8 @@ signed_in_dropdown <- function(reddit) {
       $('#logout_button').on('click', function() { 
         $('#user_menu').dropdown('set selected', 'home');
         $('#page_select a.item').tab('change tab', 'home');
-        $('#page_select .signed-in-item').hide(); 
+        $('#page_select .signed-in-item').hide();
+        $('.login-prompt').show();
       });
     "))
   )
@@ -142,6 +149,17 @@ signed_out_dropdown <- function(reddit) {
           shiny.semantic::icon("sign in alternate"), "Sign In"
         ),
         shiny.semantic::menu_divider(),
+        a(
+          class = "mobile-item tab-item item", 
+          `data-tab` = "home", `data-value` = "home", 
+          shiny.semantic::icon("home"), "Home"
+        ),
+        a(
+          class = "mobile-item tab-item item", 
+          `data-tab` = "about", `data-value` = "about", 
+          shiny.semantic::icon("question mark"), "About"
+        ),
+        shiny.semantic::menu_divider(class = "mobile-item"),
         shiny.semantic::menu_item(
           shiny.semantic::icon("external alternate"), "Visit Reddit",
           href = "https://www.reddit.com", target = "_blank"

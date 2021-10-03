@@ -2,6 +2,7 @@
 
 This application aims to do some top-level analysis into a selected subreddit, including:
 
+- Up/Downvote History
 - Recent Posts
 - Comment Trends
 - Text Analysis
@@ -14,4 +15,5 @@ In order to use this application, you will need to get a Reddit Client ID/Secret
 [Wiki page](https://github.com/reddit-archive/reddit/wiki/API).
 
 ### Package Information
-This requires the development version of `shiny.semantic` in order to take advantage of [Fomantic UI](https://fomantic-ui.com/)
+This requires the development version of `shiny.semantic` in order to take advantage of 
+[Fomantic UI](https://fomantic-ui.com/).

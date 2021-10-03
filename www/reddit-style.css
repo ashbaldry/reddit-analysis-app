@@ -49,6 +49,11 @@ body, .ui.tab.segment {
   padding-left: 100px;
 }
 
+.login-prompt{
+  text-align: center;
+  padding-bottom: 50px;
+}
+
 .user-header-item.ui.items>.item .meta {
   margin: 0;
 }

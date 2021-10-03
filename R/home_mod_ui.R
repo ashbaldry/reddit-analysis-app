@@ -3,43 +3,23 @@ user_home_ui <- function(id) {
   
   div(
     class = "ui container",
+    h1("Reddit Profile Analyzer"),
     div(
-      class = "ui stackable grid",
-      div(
-        class = "two columns stretched row",
-        
-        div(
-          class = "column",
-          reddit_segment(
-            h2("Reddit Profile Analyzer"),
-            p("This aim of the app is to provide some insight to your behaviour on the Reddit site. It looks at upvote
-              and downvote history, as well as submissions and comments made."),
-            span(
-              class = "login-prompt",
-              p("To see your results, please sign in:"),
-              a(
-                class = "ui inverted orange button", 
-                href = auth_reddit_uri(client_id, redirect_uri, c("identity", "read", "history", "mysubreddits")), 
-                "Sign In"
-              )
-            )
-          )
-        ),
-        
-        div(
-          class = "column",
-          reddit_segment(
-            div(
-              h2("Hot Post on r/aww:"),
-              textOutput(ns("title"), h4),
-              uiOutput(ns("post"), class = "centered-reddit-post"),
-              tags$br(),
-              uiOutput(ns("link"))
-            )
-          )
-        )
+      class = "login-prompt",
+      a(
+        class = "ui huge orange button", 
+        href = auth_reddit_uri(client_id, redirect_uri, c("identity", "read", "history", "mysubreddits")), 
+        "Sign In"
       )
-      
+    ),
+    reddit_segment(
+      div(
+        h2("Hot Post on r/aww:"),
+        textOutput(ns("title"), h4),
+        uiOutput(ns("post"), class = "centered-reddit-post"),
+        tags$br(),
+        uiOutput(ns("link"))
+      )
     )
   )
 }

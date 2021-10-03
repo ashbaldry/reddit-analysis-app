@@ -1,6 +1,6 @@
 user_home_server <- function(input, output, session) {
   res <- httr::GET(
-    "http://www.reddit.com/r/aww.json?sort=hot&limit=10", 
+    "https://www.reddit.com/r/aww.json?sort=hot&limit=10", 
     httr::user_agent(glue::glue("shiny:ashbaldry.shinyapps.io:v1.0.0 {Sys.time()} (by /u/AshenCoder)"))
   )
   cont <- httr::content(res)
@@ -23,9 +23,7 @@ user_home_server <- function(input, output, session) {
     tagList(
       scales::comma(post$score),
       "karma - ",
-    tags$a(
-      href = paste0("https://www.reddit.com", post$permalink), target = "_blank", "Link"
+      tags$a(href = paste0("https://www.reddit.com", post$permalink), target = "_blank", "Link")
     )
-  )
   })
 }

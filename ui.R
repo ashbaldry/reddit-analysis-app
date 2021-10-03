@@ -51,11 +51,11 @@ shiny.semantic::semanticPage(
             a(
               class = "signed-in-item item", `data-tab` = "comments", `data-value` = "comments", 
               shiny.semantic::icon("blue comment dots"), "Comments"
+            ),
+            a(
+              class = "item", `data-tab` = "about", `data-value` = "about", 
+              shiny.semantic::icon("blue question mark"), "About"
             )
-            # a(
-            #   class = "item", `data-tab` = "subreddit", `data-value` = "subreddit", 
-            #   shiny.semantic::icon("blue list ol"), "Subreddit"
-            # ),
           )
         )
       ),
@@ -101,6 +101,10 @@ shiny.semantic::semanticPage(
     div(
       class = "ui tab basic segment", `data-tab` = "comments",
       comments_page_ui("comments", type = "Comment")
+    ),
+    div(
+      class = "ui tab basic segment", `data-tab` = "about",
+      about_page_ui("about")
     )
     # div(
     #   class = "ui tab basic segment", `data-tab` = "subreddit",
