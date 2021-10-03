@@ -15,7 +15,7 @@ user_home_ui <- function(id) {
     reddit_segment(
       div(
         h2("Hot Post on r/aww:"),
-        textOutput(ns("title"), h4),
+        uiOutput(ns("title"), container = h4),
         uiOutput(ns("post"), class = "centered-reddit-post"),
         tags$br(),
         uiOutput(ns("link"))
