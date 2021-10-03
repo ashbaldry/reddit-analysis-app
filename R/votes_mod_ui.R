@@ -3,7 +3,7 @@ votes_page_ui <- function(id) {
   div(
     class = "ui stackable grid padded-grid", id = ns("page_grid"),
     div(
-      class = "row",
+      class = "stretched row",
       div(
         class = "six wide column",
         reddit_segment(

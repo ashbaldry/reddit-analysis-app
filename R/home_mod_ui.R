@@ -7,7 +7,7 @@ user_home_ui <- function(id) {
     div(
       class = "login-prompt",
       a(
-        class = "ui huge orange button", 
+        class = "ui orange button login-button", 
         href = auth_reddit_uri(client_id, redirect_uri, c("identity", "read", "history", "mysubreddits")), 
         "Sign In"
       )

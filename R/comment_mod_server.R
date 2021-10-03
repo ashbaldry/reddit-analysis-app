@@ -52,8 +52,13 @@ comments_page_server <- function(input, output, session, reddit, rr, type = "Com
   
   comm_up_perc <- reactive({
     if (is.null(user_comments()) || !nrow(user_comments())) return(NA_real_)
-    comm_up_cnt() / (comm_up_cnt() + comm_down_cnt())
+    if ("upvote_ratio" %in% names(user_comments())) {
+      user_comments()[, weighted.mean(upvote_ratio, ups)]
+    } else {
+      comm_up_cnt() / (comm_up_cnt() + comm_down_cnt())
+    }
   })
+  
   output$comm_up_perc <- renderText(scales::percent(comm_up_perc()))
   
   comm_ratio <- reactive({

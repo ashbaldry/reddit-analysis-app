@@ -95,16 +95,21 @@ comment_karma_tl <- function(dt, label = "Posts", cake_day = NULL) {
 # Checks for word breaks. If so then excludes when r/subreddit, u/username or /s (sarcasm) is used.
 # Otherwise checks for when spaces and non-words are combined
 tokenize_reddit <- function(x, m = names(x), split_hyphens = TRUE) {
-  reddit_regex <- "(?:(\\b)(?:(?<!\\b[ru]\\/)((?=[^s])|(?=\\w{2})|(?<=[^\\/])))((?<=[^ru])|(?<=\\w{2})|(?=[^\\/])))|((?:(?!=\\w)(?<=\\s))|((?:(?=\\s)(?<!\\w))))"
   x[is.na(x)] <- ""
-  if (split_hyphens) x <- gsub("(?<=[a-zA-Z])\\-(?=[a-zA-Z])", ("\\1xyzzyx\\2"), x, perl = TRUE)
-  y <- structure(stringi::stri_split_regex(x, reddit_regex), names = m)
+  
+  x_clean <- remove_hyperlinks(x)
+  x_clean <- remove_urls(x_clean)
+  
+  reddit_regex <- "(?:(\\b)(?:(?<!\\b[ru]\\/)((?=[^s])|(?=\\w{2})|(?<=[^\\/])))((?<=[^ru])|(?<=\\w{2})|(?=[^\\/])))|((?:(?!=\\w)(?<=\\s))|((?:(?=\\W)(?<=\\W))))"
+  
+  if (split_hyphens) x_clean <- gsub("(?<=[a-zA-Z])\\-(?=[a-zA-Z])", ("\\1xyzzyx\\2"), x_clean, perl = TRUE)
+  y <- structure(stringi::stri_split_regex(x_clean, reddit_regex), names = m)
   if (split_hyphens) y <- lapply(y, gsub, pattern = "xyzzyx", replacement = "-")
   y
 }
 
 get_comment_words <- function(dt, text_col = "body") {
-  words <- quanteda::tokens(tokenize_reddit(dt[[text_col]], dt$id), remove_punct = TRUE) %>%
+  words <- quanteda::tokens(tokenize_reddit(dt[[text_col]], dt$id), remove_punct = TRUE, remove_symbols = TRUE) %>%
     quanteda::tokens_remove(c("`", "http", "https", "didn", "wasn", "ve")) %>%
     quanteda::tokens_tolower(keep_acronyms = TRUE) %>%
     quanteda::tokens_select(pattern = quanteda::stopwords(language = "en", source = "smart"), selection = "remove")
@@ -115,30 +120,44 @@ get_comment_words <- function(dt, text_col = "body") {
   id_dt[words_dt, on = "id"]
 }
 
+remove_hyperlinks <- function(x) gsub("\\[(.*?)\\]\\(.*?\\)", "\\1", x)
+remove_urls <- function(x) gsub("http(s|):\\/\\/.*?(\\s|$)", "\\2", x)
+
 word_freq_cloud <- function(word_dt, label = "Posts") {
-  if (is.null(word_dt) || !nrow(word_dt)) return(highcharter::highchart())
+  if (is.null(word_dt) || nrow(word_dt) == 0) return(highcharter::highchart())
   
   uniq_word_dt <- unique(word_dt)[
     , 
     .(key_subreddit = names(which.max(table(subreddit))),
       last_post = max(created_utc),
-      count = .N, 
-      avg_score = mean(score)
+      count = scales::number(.N), 
+      avg_score = scales::number(mean(score)),
+      score = round(mean(score))
     ), 
     by = .(word)
   ]
-  setorder(uniq_word_dt, -count, -last_post)
+  setorder(uniq_word_dt, -count, -last_post, -avg_score)
+  uniq_word_dt[, color := highcharter::colorize(score, c(downvote_colour, upvote_colour))]
   
   highcharter::highchart() %>%
     highcharter::hc_add_series(
       uniq_word_dt[seq(min(.N, 100))],
-      highcharter::hcaes(name = word, weight = count, sub = key_subreddit),
+      highcharter::hcaes(name = word, weight = count, sub = key_subreddit, color = color),
       type = "wordcloud",
+      maxFontSize = 32,
+      minFontSize = 8,
       tooltip = list(
-        pointFormat = "Word: <b>{point.name}</b><br/>Posts: <b>{point.weight}</b><br/>Subreddit Most Used:<br/><b>{point.sub}</b>"
+        pointFormat = paste0(
+          "Word: <b>{point.name}</b><br/>Posts: <b>{point.weight}</b><br/>",
+          "Average Rating: <b>{point.avg_score}</b><br/>",
+          "Subreddit Most Used:<br/><b>{point.sub}</b>"
+        )
       )
     ) %>%
     highcharter::hc_title(
-      text = paste("Top Words Used in", label)
+      text = paste("Top, ", min(c(100, nrow(uniq_word_dt))), "Words Used in", label)
+    ) %>%
+    highcharter::hc_subtitle(
+      text = "Colour based on average score of post"
     )
 }
