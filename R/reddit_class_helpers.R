@@ -57,7 +57,10 @@ get_subreddit_karma <- function(access_token) {
   
   httr::stop_for_status(res)
   
-  data.table::rbindlist(httr::content(res)$data, use.names = TRUE, fill = TRUE)
+  karma <- data.table::rbindlist(httr::content(res)$data, use.names = TRUE, fill = TRUE)
+  karma[comment_karma == 0 & link_karma > 0, comment_karma := NA_real_]
+  karma[comment_karma > 0 & link_karma == 1, link_karma := NA_real_]
+  karma[]
 }
 
 get_subscribed_subreddits <- function(access_token) {

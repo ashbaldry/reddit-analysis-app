@@ -6,6 +6,10 @@ user_home_server <- function(input, output, session) {
   cont <- httr::content(res)
   
   post <- cont$data$children[[floor(runif(1, 4, 12))]]$data
+  # Can't find nice preview of gallery post
+  while (length(post$media_metadata) > 0) {
+    post <- cont$data$children[[floor(runif(1, 4, 12))]]$data
+  }
   
   output$title <- renderUI(span(post$title))
   output$post <- renderUI({
