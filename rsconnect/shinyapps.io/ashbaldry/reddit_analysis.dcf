@@ -5,10 +5,10 @@ account: ashbaldry
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1819120
-bundleId: 5099528
+bundleId: 5099563
 url: https://ashbaldry.shinyapps.io/reddit_analysis/
-when: 1633272373.57346
-lastSyncTime: 1633272373.57346
+when: 1633273442.47659
+lastSyncTime: 1633273442.47659
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .Rprofile|README.md|TODO.md

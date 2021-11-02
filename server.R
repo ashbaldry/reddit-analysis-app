@@ -3,12 +3,6 @@ function(input, output, session) {
   reddit <- Reddit$new(client_id, client_secret, redirect_uri)
   rr <- reactive(reddit$get_reactive())
   
-  #### API Token ####
-  observe({
-    query <- getQueryString()
-    if ("code" %in% names(query)) reddit$get_access_token(query$code)  
-  })
-  
   # Data load
   observeEvent(rr(), {
     if (reddit$is_authorized()) {
@@ -60,6 +54,12 @@ function(input, output, session) {
   observeEvent(input$logout_button, {
     reddit$logout()
     updateQueryString("?", mode = "push")
+  })
+  
+  #### API Token ####
+  observe({
+    query <- getQueryString()
+    if ("code" %in% names(query)) reddit$get_access_token(query$code)  
   })
   
   #### Content Pages ####

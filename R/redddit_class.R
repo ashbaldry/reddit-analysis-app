@@ -39,6 +39,7 @@ Reddit <- R6::R6Class(
       
       private$auth_code <- auth_code
       res <- get_reddit_access_token(auth_code, private$redirect_uri, private$client_id, private$client_secret)
+      if (is.null(res$access_token) || res$access_token == "") return(FALSE)
       private$access_token <- paste("bearer", res$access_token)
       
       self$user_info <- self$get_user_info()
